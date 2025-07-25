@@ -1,0 +1,187 @@
+<body>
+    <div
+      class="relative flex size-full min-h-screen flex-col bg-[#0f1a24] dark group/design-root overflow-x-hidden"
+      style="--select-button-svg: url('data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724px%27 height=%2724px%27 fill=%27rgb(141,174,206)%27 viewBox=%270 0 256 256%27%3e%3cpath d=%27M181.66,170.34a8,8,0,0,1,0,11.32l-48,48a8,8,0,0,1-11.32,0l-48-48a8,8,0,0,1,11.32-11.32L128,212.69l42.34-42.35A8,8,0,0,1,181.66,170.34Zm-96-84.68L128,43.31l42.34,42.35a8,8,0,0,0,11.32-11.32l-48-48a8,8,0,0,0-11.32,0l-48,48A8,8,0,0,0,85.66,85.66Z%27%3e%3c/path%3e%3c/svg%3e'); font-family: Inter, &quot;Noto Sans&quot;, sans-serif;"
+    >
+      <div class="layout-container flex h-full grow flex-col">
+        <div class="px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-40 flex flex-1 justify-center py-4 sm:py-5 lg:py-6">
+          <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+            <h2 class="text-white tracking-light text-xl sm:text-2xl md:text-[28px] font-bold leading-tight px-4 text-center pb-3 pt-5">Trade Asset-Backed Tokens</h2>
+            
+            <!-- Hero/Swap Card -->
+            <div class="p-4">
+              <div class="relative bg-gradient-to-br from-[#172736]/80 via-[#22303a]/60 to-[#0f1a24]/80 rounded-xl sm:rounded-2xl shadow-2xl border border-[#22303a] flex flex-col items-stretch justify-end pt-20 sm:pt-24 md:pt-[132px] overflow-hidden">
+                <!-- Animated Glow -->
+                <div class="absolute left-1/2 top-0 -translate-x-1/2 w-1/2 h-16 sm:h-20 md:h-24 bg-gradient-to-r from-[#359dff]/30 via-transparent to-[#359dff]/30 blur-2xl opacity-60 animate-pulse pointer-events-none"></div>
+                <div class="flex w-full items-end justify-between gap-3 sm:gap-4 p-3 sm:p-4 z-10">
+                  <div class="flex max-w-[440px] flex-1 flex-col gap-1">
+                    <p class="text-white tracking-light text-lg sm:text-xl md:text-2xl font-extrabold leading-tight max-w-[440px] drop-shadow-lg">Swap</p>
+                    <p class="text-white text-sm sm:text-base font-medium leading-normal">Select tokens and enter the amount to swap</p>
+                  </div>
+                  <button
+                    class="flex min-w-[80px] sm:min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 sm:h-10 px-3 sm:px-4 bg-[#359dff] text-[#0f1a24] text-xs sm:text-sm font-bold leading-normal tracking-[0.015em] shadow-lg border-2 border-transparent hover:border-[#359dff] hover:shadow-[0_0_12px_#359dff] focus:outline-none focus:ring-2 focus:ring-[#359dff] transition-all relative group"
+                    (click)="triggerToast()"
+                  >
+                    <span class="truncate">Swap</span>
+                    <span *ngIf="loading" class="ml-2 animate-spin border-2 border-white border-t-transparent rounded-full w-3 h-3 sm:w-4 sm:h-4 inline-block"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Inline Swap Inputs -->
+            <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 px-4 py-3 w-full max-w-[600px] mx-auto">
+              <!-- Token A -->
+              <div class="flex-1 flex flex-col w-full sm:w-auto">
+                <div class="flex items-center bg-[#172736] rounded-full border border-[#2e4e6b] px-3 py-2 mb-2">
+                  <select class="appearance-none bg-transparent text-white font-bold text-sm sm:text-base pr-6 focus:outline-none flex-1">
+                    <option value="opx">🔵 OPX</option>
+                    <option value="sol">🟡 SOL</option>
+                    <option value="usdc">🟢 USDC</option>
+                  </select>
+                  <span class="ml-2 text-[#8daece] text-base sm:text-lg pointer-events-none">▼</span>
+                </div>
+                <input placeholder="Amount" class="form-input w-full rounded-lg border border-[#2e4e6b] bg-[#172736] text-white placeholder:text-[#8daece] p-2 sm:p-3 text-sm sm:text-base font-normal leading-normal" />
+                <span class="text-[#8daece] text-xs mt-1 flex items-center gap-1"><svg class="w-3 h-3 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l2 2"/></svg> Balance: 0.00</span>
+              </div>
+              
+              <!-- Swap Arrow -->
+              <div class="flex items-center justify-center my-2 sm:my-0">
+                <div class="rounded-full bg-[#22303a] p-1.5 sm:p-2 shadow-md">
+                  <svg class="w-4 h-4 sm:w-6 sm:h-6 text-[#359dff]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 17l4 4 4-4m-4-5V3"/></svg>
+                </div>
+              </div>
+              
+              <!-- Token B -->
+              <div class="flex-1 flex flex-col w-full sm:w-auto">
+                <div class="flex items-center bg-[#172736] rounded-full border border-[#2e4e6b] px-3 py-2 mb-2">
+                  <select class="appearance-none bg-transparent text-white font-bold text-sm sm:text-base pr-6 focus:outline-none flex-1">
+                    <option value="sol">🟡 SOL</option>
+                    <option value="opx">🔵 OPX</option>
+                    <option value="usdc">🟢 USDC</option>
+                  </select>
+                  <span class="ml-2 text-[#8daece] text-base sm:text-lg pointer-events-none">▼</span>
+                </div>
+                <input placeholder="Amount" class="form-input w-full rounded-lg border border-[#2e4e6b] bg-[#172736] text-white placeholder:text-[#8daece] p-2 sm:p-3 text-sm sm:text-base font-normal leading-normal" />
+                <span class="text-[#8daece] text-xs mt-1 flex items-center gap-1"><svg class="w-3 h-3 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l2 2"/></svg> Balance: 0.00</span>
+              </div>
+            </div>
+            
+            <!-- Real-Time Price Preview -->
+            <div class="flex items-center gap-2 px-4 pb-3 pt-1">
+              <span class="inline-flex items-center px-2 sm:px-3 py-1 rounded-full bg-[#172736] text-[#8daece] text-xs font-semibold"><svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l2 2"/></svg> Price: 1 OPX = 0.8 SOL</span>
+            </div>
+            
+            <!-- Slippage Tolerance -->
+            <div class="@container">
+              <div class="relative flex w-full flex-col items-start justify-between gap-3 p-4 @[480px]:flex-row @[480px]:items-center">
+                <div class="flex w-full shrink-[3] items-center justify-between">
+                  <p class="text-white text-sm sm:text-base font-medium leading-normal">Slippage Tolerance</p>
+                  <p class="text-white text-xs sm:text-sm font-normal leading-normal @[480px]:hidden">0.5</p>
+                </div>
+                <div class="flex h-4 w-full items-center gap-4">
+                  <div class="flex h-1 flex-1 rounded-sm bg-[#2e4e6b]">
+                    <div class="h-full w-[32%] rounded-sm bg-[#359dff]"></div>
+                    <div class="relative"><div class="absolute -left-2 -top-1.5 size-3 sm:size-4 rounded-full bg-[#359dff]"></div></div>
+                  </div>
+                  <p class="text-white text-xs sm:text-sm font-normal leading-normal hidden @[480px]:block">0.5</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Liquidity Tabs -->
+            <div class="pb-3">
+              <div class="flex border-b border-[#2e4e6b] px-4 gap-4 sm:gap-8">
+                <a class="flex flex-col items-center justify-center border-b-[3px] border-b-[#359dff] text-white pb-2 sm:pb-[13px] pt-3 sm:pt-4" href="#">
+                  <p class="text-white text-xs sm:text-sm font-bold leading-normal tracking-[0.015em]">Add Liquidity</p>
+                </a>
+                <a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#8daece] pb-2 sm:pb-[13px] pt-3 sm:pt-4" href="#">
+                  <p class="text-[#8daece] text-xs sm:text-sm font-bold leading-normal tracking-[0.015em]">Remove Liquidity</p>
+                </a>
+              </div>
+            </div>
+            
+            <!-- Pool Information -->
+            <div class="p-4 grid grid-cols-1 sm:grid-cols-[20%_1fr] gap-x-6">
+              <div class="col-span-1 sm:col-span-2 grid grid-cols-1 sm:grid-cols-subgrid border-t border-t-[#2e4e6b] py-3 sm:py-5">
+                <p class="text-[#8daece] text-xs sm:text-sm font-normal leading-normal">Token Pair</p>
+                <p class="text-white text-xs sm:text-sm font-normal leading-normal">ETH/USDC</p>
+              </div>
+              <div class="col-span-1 sm:col-span-2 grid grid-cols-1 sm:grid-cols-subgrid border-t border-t-[#2e4e6b] py-3 sm:py-5">
+                <p class="text-[#8daece] text-xs sm:text-sm font-normal leading-normal">Total Liquidity</p>
+                <p class="text-white text-xs sm:text-sm font-normal leading-normal">$1,234,567</p>
+              </div>
+              <div class="col-span-1 sm:col-span-2 grid grid-cols-1 sm:grid-cols-subgrid border-t border-t-[#2e4e6b] py-3 sm:py-5">
+                <p class="text-[#8daece] text-xs sm:text-sm font-normal leading-normal">Your Pool Share</p>
+                <p class="text-white text-xs sm:text-sm font-normal leading-normal">10%</p>
+              </div>
+              <div class="col-span-1 sm:col-span-2 grid grid-cols-1 sm:grid-cols-subgrid border-t border-t-[#2e4e6b] py-3 sm:py-5">
+                <p class="text-[#8daece] text-xs sm:text-sm font-normal leading-normal">APY Breakdown</p>
+                <p class="text-white text-xs sm:text-sm font-normal leading-normal">20%</p>
+              </div>
+            </div>
+            
+            <!-- Provide Liquidity Button -->
+            <div class="flex px-4 py-3 justify-end">
+              <button
+                class="flex min-w-[80px] sm:min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 sm:h-10 px-3 sm:px-4 bg-[#359dff] text-[#0f1a24] text-xs sm:text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#0a6fd8] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#359dff] focus:ring-offset-2 focus:ring-offset-[#0f1a24]"
+              >
+                <span class="truncate">Provide Liquidity</span>
+              </button>
+            </div>
+            
+            <!-- Pool Positions Section -->
+            <h2 class="text-white text-lg sm:text-xl md:text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Your Pool Positions</h2>
+            
+            <!-- Toast/Success Alert -->
+            <div *ngIf="showToast" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-green-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded shadow-lg transition-all text-sm sm:text-base">Action successful!</div>
+            
+            <!-- Pool Cards Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4 mt-4 sm:mt-8">
+              <!-- Pool Card 1 -->
+              <div class="flex flex-col gap-3 pb-3 transition-transform duration-200 hover:scale-105 hover:shadow-xl hover:border-[#359dff] border border-transparent cursor-pointer relative group" (click)="expandPoolCard(0)">
+                <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBfcmAP3UjhUKcREbaGsjRT23POOZkJS10buKuH3HMo3FSpkia3hJmSwVD88IieBQZ4hGea_cUTiIt7jjIVvmftEEi0acCZd59-kjCNDi38ejlR3onX29sp1dtNtJUzGwuZkGkKMOsi272d7MhJXIYIK0cJoQGqX5O-vMTMnc5RzXL-Myt56jnWlG4AkEqOOnBiUZxtM_RUQkGtdUJIcgc5uFGwspElwryQGN4oVVtMTIJgZJc349ewIoCjv9QRfo6EOs3cJ9WUxsg");'></div>
+                <div>
+                  <p class="text-white text-sm sm:text-base font-medium leading-normal flex items-center gap-2">OPX/NEH-OAT <span class="text-base sm:text-lg">🔵</span><span class="text-base sm:text-lg">🟢</span></p>
+                  <p class="text-[#8daece] text-xs sm:text-sm font-normal leading-normal">Staked: 500 OPX ($2500)</p>
+                  <p class="text-[#8daece] text-xs sm:text-sm font-normal leading-normal">Earned OPX: 125</p>
+                  <div *ngIf="expandedPoolCard === 0" class="mt-2 p-2 bg-[#172736] rounded text-xs text-white animate-fade-in">Pool details coming soon...</div>
+                  <button *ngIf="expandedPoolCard !== 0" class="absolute top-2 right-2 bg-[#359dff] text-[#0f1a24] px-2 sm:px-3 py-1 rounded shadow hover:scale-105 transition-all opacity-0 group-hover:opacity-100 text-xs sm:text-sm">View Details</button>
+                </div>
+              </div>
+              
+              <!-- Pool Card 2 -->
+              <div class="flex flex-col gap-3 pb-3 transition-transform duration-200 hover:scale-105 hover:shadow-xl hover:border-[#359dff] border border-transparent cursor-pointer relative group" (click)="expandPoolCard(1)">
+                <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA6JRSb2BV_afjH3a3ALh3B2IEgB-6eU_E-Tbam9ameAYLEKpy-ZHSFjrQWiqzD6Mscz0BTgQ2jtWjREzavu3_0zS-wiQ5IbtK_Gca9XCoMIxmO7DZyUPrY-YKH_5Og0DPLhkjQDkEqrtcblg_XtVwrcJTIKVHws5M2mwB0AfoDrPrv47avsyPxezQaWxb3KMGKbGXq3lS1bm3hCMnEIoIyuHMtZCg4XkdUnIEfMROR95VzYb6UNXRpUCEdlihPIGfCynAOPekxSvA");'></div>
+                <div>
+                  <p class="text-white text-sm sm:text-base font-medium leading-normal flex items-center gap-2">OS-OAT/SOL <span class="text-base sm:text-lg">🟡</span><span class="text-base sm:text-lg">🟢</span></p>
+                  <p class="text-[#8daece] text-xs sm:text-sm font-normal leading-normal">Staked: 20 SOL ($1000)</p>
+                  <p class="text-[#8daece] text-xs sm:text-sm font-normal leading-normal">Earned OPX: 75</p>
+                  <div *ngIf="expandedPoolCard === 1" class="mt-2 p-2 bg-[#172736] rounded text-xs text-white animate-fade-in">Pool details coming soon...</div>
+                  <button *ngIf="expandedPoolCard !== 1" class="absolute top-2 right-2 bg-[#359dff] text-[#0f1a24] px-2 sm:px-3 py-1 rounded shadow hover:scale-105 transition-all opacity-0 group-hover:opacity-100 text-xs sm:text-sm">View Details</button>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="flex justify-stretch">
+              <div class="flex flex-1 gap-2 sm:gap-3 flex-wrap px-4 py-3 justify-center sm:justify-between">
+                <button
+                  class="flex min-w-[80px] sm:min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 sm:h-10 px-3 sm:px-4 bg-[#359dff] text-[#0f1a24] text-xs sm:text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#0a6fd8] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#359dff] focus:ring-offset-2 focus:ring-offset-[#0f1a24]"
+                >
+                  <span class="truncate">Manage Pool</span>
+                </button>
+                <button
+                  class="flex min-w-[80px] sm:min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 sm:h-10 px-3 sm:px-4 bg-[#359dff] text-[#0f1a24] text-xs sm:text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#0a6fd8] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#359dff] focus:ring-offset-2 focus:ring-offset-[#0f1a24]"
+                >
+                  <span class="truncate">Manage Pool</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>

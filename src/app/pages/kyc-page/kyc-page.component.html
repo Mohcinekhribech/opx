@@ -1,0 +1,188 @@
+<body>
+    <div
+      class="relative flex size-full min-h-screen flex-col bg-[#111518] dark group/design-root overflow-x-hidden"
+      style="--select-button-svg: url('data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724px%27 height=%2724px%27 fill=%27rgb(157,171,184)%27 viewBox=%270 0 256 256%27%3e%3cpath d=%27M181.66,170.34a8,8,0,0,1,0,11.32l-48,48a8,8,0,0,1-11.32,0l-48-48a8,8,0,0,1,11.32-11.32L128,212.69l42.34-42.35A8,8,0,0,1,181.66,170.34Zm-96-84.68L128,43.31l42.34,42.35a8,8,0,0,0,11.32-11.32l-48-48a8,8,0,0,0-11.32,0l-48,48A8,8,0,0,0,85.66,85.66Z%27%3e%3c/path%3e%3c/svg%3e'); font-family: Inter, &quot;Noto Sans&quot;, sans-serif;"
+    >
+      <div class="layout-container flex h-full grow flex-col">
+        <div class="px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-40 flex flex-1 justify-center py-4 sm:py-5 lg:py-6">
+          <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+            <div class="flex flex-wrap justify-between gap-3 p-4">
+              <p class="text-white tracking-light text-xl sm:text-2xl md:text-3xl lg:text-[32px] font-bold leading-tight min-w-0 sm:min-w-72">Identity Verification (KYC / AML)</p>
+            </div>
+            <!-- Blockchain Stepper -->
+            <div class="w-full flex flex-col items-center py-4 sm:py-6 lg:py-8">
+              <div class="relative flex items-center justify-center w-full max-w-2xl">
+                <div class="absolute left-0 right-0 top-1/2 h-1 bg-blue-900 opacity-40 z-0 rounded-full"></div>
+                <ng-container *ngFor="let step of [1,2,3,4,5]; let i = index">
+                  <div class="relative z-10 flex flex-col items-center w-1/5">
+                    <div [ngClass]="{'bg-blue-600 text-white border-blue-700': currentStep >= step, 'bg-[#181A20] text-blue-400 border-blue-900': currentStep < step}" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-lg sm:text-xl border-4 shadow-lg transition-all">
+                      <ng-container [ngSwitch]="step">
+                        <!-- Step 1: Document -->
+                        <svg *ngSwitchCase="1" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 sm:w-7 sm:h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M7 7v10M17 7v10M7 7h10M7 17h10" />
+                        </svg>
+                        <!-- Step 2: Camera -->
+                        <svg *ngSwitchCase="2" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 sm:w-7 sm:h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M3 7h2l2-3h10l2 3h2a2 2 0 012 2v10a2 2 0 01-2 2H3a2 2 0 01-2-2V9a2 2 0 012-2z" />
+                          <circle cx="12" cy="13" r="4" />
+                        </svg>
+                        <!-- Step 3: Shield Check -->
+                        <svg *ngSwitchCase="3" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 sm:w-7 sm:h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4l7 4v4c0 5.25-3.5 9.74-7 11-3.5-1.26-7-5.75-7-11V8l7-4z" />
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2l4-4" />
+                        </svg>
+                        <!-- Step 4: Wallet -->
+                        <svg *ngSwitchCase="4" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 sm:w-7 sm:h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <rect x="2" y="7" width="20" height="10" rx="2" />
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M16 12h.01" />
+                        </svg>
+                        <!-- Step 5: Badge Check -->
+                        <svg *ngSwitchCase="5" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 sm:w-7 sm:h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 17l-5 2l1-5.5L3 9.5l5.5-.5L12 4l3.5 5l5.5.5l-5 4.5l1 5.5z" />
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2l4-4" />
+                        </svg>
+                      </ng-container>
+                    </div>
+                    <span class="mt-2 text-xs font-semibold text-center text-white">{{ ['Upload','Selfie','AML','Wallet','Status'][i] }}</span>
+                  </div>
+                </ng-container>
+              </div>
+              <div class="w-full max-w-2xl h-2 bg-blue-900 rounded-full mt-4 mb-8">
+                <div class="h-2 rounded-full bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 transition-all" [style.width]="(currentStep/5*100)+'%'" style="width: 20%;"></div>
+              </div>
+            </div>
+            <!-- Step Cards -->
+            <div class="flex flex-col items-center justify-center min-h-[50vh] sm:min-h-[60vh]">
+              <!-- Step 1: Document Upload -->
+              <div *ngIf="currentStep === 1" class="w-full max-w-lg bg-[#181A20] backdrop-blur-md rounded-2xl border border-blue-900 shadow-2xl p-6 sm:p-8 flex flex-col items-center gap-4 sm:gap-6 animate-fade-in">
+                <span class="text-blue-500">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 sm:w-12 sm:h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 7v10M17 7v10M7 7h10M7 17h10" />
+                  </svg>
+                </span>
+                <h2 class="text-white text-lg sm:text-xl font-bold mb-2">Upload Your Document</h2>
+                <select class="form-input w-full rounded-lg text-white focus:outline-0 focus:ring-0 border-none bg-blue-950 focus:border-none h-12 sm:h-14 placeholder:text-blue-400 p-3 sm:p-4 text-sm sm:text-base font-normal leading-normal mb-2">
+                  <option value="one">Select Document Type</option>
+                  <option value="two">Passport</option>
+                  <option value="three">National ID</option>
+                </select>
+                <div class="flex flex-col items-center gap-4 rounded-lg border-2 border-dashed border-blue-900 px-4 sm:px-6 py-8 sm:py-10 bg-[#181A20] w-full">
+                  <span class="text-blue-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 sm:w-10 sm:h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 16V4m0 0l-4 4m4-4l4 4M4 20h16" />
+                    </svg>
+                  </span>
+                  <p class="text-white text-sm sm:text-base font-bold text-center">Drag and drop your ID document here</p>
+                  <p class="text-blue-400 text-xs text-center">Accepted: PDF, JPG, PNG. Max size: 10MB.</p>
+                  <button class="mt-2 px-4 py-2 rounded bg-blue-600 text-white font-bold hover:bg-blue-700 transition text-sm sm:text-base">Browse Files</button>
+                </div>
+                <button class="w-full mt-6 px-4 py-3 sm:py-4 rounded-xl bg-blue-500 text-white font-bold hover:bg-blue-700 transition text-sm sm:text-base" (click)="currentStep = 2">Next</button>
+              </div>
+              <!-- Step 2: Live Selfie -->
+              <div *ngIf="currentStep === 2" class="w-full max-w-lg bg-[#181A20] backdrop-blur-md rounded-2xl border border-blue-900 shadow-2xl p-6 sm:p-8 flex flex-col items-center gap-4 sm:gap-6 animate-fade-in">
+                <span class="text-blue-500">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 sm:w-12 sm:h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 7h2l2-3h10l2 3h2a2 2 0 012 2v10a2 2 0 01-2 2H3a2 2 0 01-2-2V9a2 2 0 012-2z" />
+                    <circle cx="12" cy="13" r="4" />
+                  </svg>
+                </span>
+                <h2 class="text-white text-lg sm:text-xl font-bold mb-2">Take a Live Selfie</h2>
+                <div class="w-full aspect-[3/2] rounded-lg bg-blue-950 flex items-center justify-center">
+                  <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZlE7mlr_k7aKCpNQesaqK4UamGdjWomkvevzE7oFC-Zmqs1DHCDbfIOranyHrp0TSvFpRsU1BqMApGPPGcDgLlUZmYxHVihT2hJR3d2uSKE4V3I9cpTos0HP_ELzhCp0Jj0VvFkqQSx2nNiai8gvyrP8bXjrM1PUUqfgwtF75F3i5pLvkgGy1zhdbPAGOEM1gWNAsrY6WX9sXcIpXTN10vBJD8DhOlSidzyYNStVHdkFx8tnAP9GKAuneh6oV4zMGO0QoFf7ZP9Q" alt="Selfie Preview" class="rounded-lg max-h-32 sm:max-h-40 object-cover" />
+                </div>
+                <button class="w-full px-4 py-3 sm:py-4 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition text-sm sm:text-base">Take Selfie</button>
+                <div class="flex w-full justify-between mt-4 gap-3">
+                  <button class="flex-1 px-4 py-3 sm:py-4 rounded-xl bg-blue-950 text-white font-bold hover:bg-blue-900 transition text-sm sm:text-base" (click)="currentStep = 1">Back</button>
+                  <button class="flex-1 px-4 py-3 sm:py-4 rounded-xl bg-blue-500 text-white font-bold hover:bg-blue-700 transition text-sm sm:text-base" (click)="currentStep = 3">Next</button>
+                </div>
+              </div>
+              <!-- Step 3: AML/Sanctions -->
+              <div *ngIf="currentStep === 3" class="w-full max-w-lg bg-[#181A20] backdrop-blur-md rounded-2xl border border-blue-900 shadow-2xl p-6 sm:p-8 flex flex-col items-center gap-4 sm:gap-6 animate-fade-in">
+                <span class="text-blue-500">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 sm:w-12 sm:h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4l7 4v4c0 5.25-3.5 9.74-7 11-3.5-1.26-7-5.75-7-11V8l7-4z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2l4-4" />
+                  </svg>
+                </span>
+                <h2 class="text-white text-lg sm:text-xl font-bold mb-2">AML/Sanctions Check</h2>
+                <span class="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full mb-2">Passed</span>
+                <span class="text-blue-400 text-xs">Real-time screening results <span class="ml-1" title="Anti-Money Laundering">🛈</span></span>
+                <div class="flex w-full justify-between mt-4 gap-3">
+                  <button class="flex-1 px-4 py-3 sm:py-4 rounded-xl bg-blue-950 text-white font-bold hover:bg-blue-900 transition text-sm sm:text-base" (click)="currentStep = 2">Back</button>
+                  <button class="flex-1 px-4 py-3 sm:py-4 rounded-xl bg-blue-500 text-white font-bold hover:bg-blue-700 transition text-sm sm:text-base" (click)="currentStep = 4">Next</button>
+                </div>
+              </div>
+              <!-- Step 4: Wallet Binding -->
+              <div *ngIf="currentStep === 4" class="w-full max-w-lg bg-[#181A20] backdrop-blur-md rounded-2xl border border-blue-900 shadow-2xl p-6 sm:p-8 flex flex-col items-center gap-4 sm:gap-6 animate-fade-in">
+                <span class="text-blue-500">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 sm:w-12 sm:h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="7" width="20" height="10" rx="2" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 12h.01" />
+                  </svg>
+                </span>
+                <h2 class="text-white text-lg sm:text-xl font-bold mb-2">Wallet Binding</h2>
+                <span class="text-white font-bold flex items-center gap-2 text-sm sm:text-base">Connected Wallet <span class="bg-blue-950 text-blue-400 text-xs font-mono px-3 py-1 rounded-full">0x1a2b...a0b</span> <button class="ml-1 text-blue-400 hover:text-blue-600" title="Copy"><svg class="w-4 h-4 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><rect x="3" y="3" width="13" height="13" rx="2"/></svg></button></span>
+                <span class="text-blue-400 text-xs">Confirm your wallet address for binding.</span>
+                <button class="w-full px-4 py-3 sm:py-4 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition text-sm sm:text-base">Confirm Wallet Binding</button>
+                <div class="flex w-full justify-between mt-4 gap-3">
+                  <button class="flex-1 px-4 py-3 sm:py-4 rounded-xl bg-blue-950 text-white font-bold hover:bg-blue-900 transition text-sm sm:text-base" (click)="currentStep = 3">Back</button>
+                  <button class="flex-1 px-4 py-3 sm:py-4 rounded-xl bg-blue-500 text-white font-bold hover:bg-blue-700 transition text-sm sm:text-base" (click)="currentStep = 5">Next</button>
+                </div>
+              </div>
+              <!-- Step 5: Status -->
+              <div *ngIf="currentStep === 5" class="w-full max-w-lg bg-[#181A20] backdrop-blur-md rounded-2xl border border-blue-900 shadow-2xl p-6 sm:p-8 flex flex-col items-center gap-4 sm:gap-6 animate-fade-in">
+                <span class="text-blue-500">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 sm:w-12 sm:h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 17l-5 2l1-5.5L3 9.5l5.5-.5L12 4l3.5 5l5.5.5l-5 4.5l1 5.5z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2l4-4" />
+                  </svg>
+                </span>
+                <h2 class="text-white text-lg sm:text-xl font-bold mb-2">Verification Status</h2>
+                <span class="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full mb-2">Verified</span>
+                <span class="text-blue-400 text-xs">Verified on 2024-01-15 10:30 AM</span>
+                <div class="flex w-full justify-end mt-4">
+                  <button class="px-4 py-3 sm:py-4 rounded-xl bg-blue-950 text-white font-bold hover:bg-blue-900 transition text-sm sm:text-base" (click)="currentStep = 1">Re-apply</button>
+                </div>
+              </div>
+            </div>
+            <div class="flex px-4 py-3 justify-end">
+              <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#293138] text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#1a232a] transition">
+                <span class="truncate">Re-apply</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <footer class="flex justify-center">
+          <div class="flex max-w-[960px] flex-1 flex-col">
+            <footer class="flex flex-col gap-4 sm:gap-6 px-4 sm:px-5 py-8 sm:py-10 text-center">
+              <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+                <a class="text-[#9dabb8] text-sm sm:text-base font-normal leading-normal min-w-0 sm:min-w-40 hover:text-blue-400 transition-colors" href="#">Terms of Service</a>
+                <a class="text-[#9dabb8] text-sm sm:text-base font-normal leading-normal min-w-0 sm:min-w-40 hover:text-blue-400 transition-colors" href="#">Privacy Policy</a>
+              </div>
+              <div class="flex flex-wrap justify-center gap-4">
+                <a href="#">
+                  <div class="text-[#9dabb8]" data-icon="TwitterLogo" data-size="24px" data-weight="regular">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256" class="sm:w-6 sm:h-6">
+                      <path
+                        d="M247.39,68.94A8,8,0,0,0,240,64H209.57A48.66,48.66,0,0,0,168.1,40a46.91,46.91,0,0,0-33.75,13.7A47.9,47.9,0,0,0,120,88v6.09C79.74,83.47,46.81,50.72,46.46,50.37a8,8,0,0,0-13.65,4.92c-4.31,47.79,9.57,79.77,22,98.18a110.93,110.93,0,0,0,21.88,24.2c-15.23,17.53-39.21,26.74-39.47,26.84a8,8,0,0,0-3.85,11.93c.75,1.12,3.75,5.05,11.08,8.72C53.51,229.7,65.48,232,80,232c70.67,0,129.72-54.42,135.75-124.44l29.91-29.9A8,8,0,0,0,247.39,68.94Zm-45,29.41a8,8,0,0,0-2.32,5.14C196,166.58,143.28,216,80,216c-10.56,0-18-1.4-23.22-3.08,11.51-6.25,27.56-17,37.88-32.48A8,8,0,0,0,92,169.08c-.47-.27-43.91-26.34-44-96,16,13,45.25,33.17,78.67,38.79A8,8,0,0,0,136,104V88a32,32,0,0,1,9.6-22.92A30.94,30.94,0,0,1,167.9,56c12.66.16,24.49,7.88,29.44,19.21A8,8,0,0,0,204.67,80h16Z"
+                      ></path>
+                    </svg>
+                  </div>
+                </a>
+                <a href="#">
+                  <div class="text-[#9dabb8]" data-icon="DiscordLogo" data-size="24px" data-weight="regular">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256" class="sm:w-6 sm:h-6">
+                      <path
+                        d="M104,140a12,12,0,1,1-12-12A12,12,0,0,1,104,140Zm60-12a12,12,0,1,0,12,12A12,12,0,0,0,164,128Zm74.45,64.9-67,29.71a16.17,16.17,0,0,1-21.71-9.1l-8.11-22q-6.72.45-13.63.46t-13.63-.46l-8.11,22a16.18,16.18,0,0,1-21.71,9.1l-67-29.71a15.93,15.93,0,0,1-9.06-18.51L38,58A16.07,16.07,0,0,1,51,46.14l36.06-5.93a16.22,16.22,0,0,1,18.26,11.88l3.26,12.84Q118.11,64,128,64t19.4.93l3.26-12.84a16.21,16.21,0,0,1,18.26-11.88L205,46.14A16.07,16.07,0,0,1,218,58l29.53,116.38A15.93,15.93,0,0,1,238.45,192.9ZM232,178.28,202.47,62s0,0-.08,0L166.33,56a.17.17,0,0,0-.17,0l-2.83,11.14c5,.94,10,2.06,14.83,3.42A8,8,0,0,1,176,86.31a8.09,8.09,0,0,1-2.16-.3A172.25,172.25,0,0,0,128,80a172.25,172.25,0,0,0-45.84,6,8,8,0,1,1-4.32-15.4c4.82-1.36,9.78-2.48,14.82-3.42L89.83,56s0,0-.12,0h0L53.61,61.93a.17.17,0,0,0-.09,0L24,178.33,91,208a.23.23,0,0,0,.22,0L98,189.72a173.2,173.2,0,0,1-20.14-4.32A8,8,0,0,1,82.16,170,171.85,171.85,0,0,0,128,176a171.85,171.85,0,0,0,45.84-6,8,8,0,0,1,4.32,15.41A173.2,173.2,0,0,1,158,189.72L164.75,208a.22.22,0,0,0,.21,0Z"
+                      ></path>
+                    </svg>
+                  </div>
+                </a>
+              </div>
+              <p class="text-[#9dabb8] text-sm sm:text-base font-normal leading-normal">&#64;2024 OPX. All rights reserved.</p>
+            </footer>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </body>

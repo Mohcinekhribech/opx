@@ -1,0 +1,358 @@
+<body>
+  <div class="relative flex min-h-screen flex-col bg-[#121417] overflow-x-hidden font-sans">
+    <div class="layout-container flex h-full grow flex-col">
+      <div class="px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-40 flex flex-1 justify-center py-4 sm:py-6 lg:py-8">
+        <div class="layout-content-container flex flex-col w-full max-w-[960px] flex-1 gap-4 sm:gap-6 lg:gap-8">
+          <!-- Header -->
+          <div class="mb-4 sm:mb-6 lg:mb-8 border-b border-[#23272f] pb-3 sm:pb-4">
+            <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-white">Analytics Dashboard</h1>
+          </div>
+
+          <!-- Real-Time Liquidity Metrics -->
+          <section class="bg-[#181c20] rounded-xl border border-[#23272f] shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
+            <h2 class="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4">Real-Time Liquidity Metrics</h2>
+            <div class="flex gap-2 sm:gap-3 flex-wrap mb-3 sm:mb-4">
+              <button class="bg-[#3182cd] text-white px-3 sm:px-5 py-2 rounded-lg font-semibold hover:bg-[#2563eb] focus:outline-none focus:ring-2 focus:ring-[#3182cd] text-sm sm:text-base">All Tokens</button>
+              <button class="bg-[#23272f] text-white px-3 sm:px-5 py-2 rounded-lg font-semibold hover:bg-[#2b3136] focus:outline-none focus:ring-2 focus:ring-[#3182cd] text-sm sm:text-base">Stablecoins</button>
+              <button class="bg-[#23272f] text-white px-3 sm:px-5 py-2 rounded-lg font-semibold hover:bg-[#2b3136] focus:outline-none focus:ring-2 focus:ring-[#3182cd] text-sm sm:text-base">Volatile Assets</button>
+            </div>
+            <div class="flex flex-wrap gap-3 sm:gap-4">
+              <div class="flex min-w-0 sm:min-w-72 flex-1 flex-col gap-2 rounded-lg border border-[#3f4850] bg-[#23272f] p-4 sm:p-6">
+                <p class="text-sm sm:text-base font-medium text-white mb-1">Total Value Locked by Pool</p>
+                <p class="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1">$2.3M</p>
+                <div class="flex gap-2 mb-2">
+                  <span class="text-[#a1abb5] text-sm sm:text-base">Last 30 Days</span>
+                  <span class="text-[#0bda5b] text-sm sm:text-base font-medium">+12%</span>
+                </div>
+                <!-- Responsive Chart -->
+                <div class="grid min-h-[120px] sm:min-h-[180px] grid-flow-col gap-3 sm:gap-6 grid-rows-[1fr_auto] items-end justify-items-center px-2 sm:px-3">
+                  <div class="border-[#a1abb5] bg-[#2b3136] border-t-2 w-full" style="height: 10%;"></div>
+                  <span class="text-[#a1abb5] text-[11px] sm:text-[13px] font-bold">Pool A</span>
+                  <div class="border-[#a1abb5] bg-[#2b3136] border-t-2 w-full" style="height: 60%;"></div>
+                  <span class="text-[#a1abb5] text-[11px] sm:text-[13px] font-bold">Pool B</span>
+                  <div class="border-[#a1abb5] bg-[#2b3136] border-t-2 w-full" style="height: 10%;"></div>
+                  <span class="text-[#a1abb5] text-[11px] sm:text-[13px] font-bold">Pool C</span>
+                  <div class="border-[#a1abb5] bg-[#2b3136] border-t-2 w-full" style="height: 30%;"></div>
+                  <span class="text-[#a1abb5] text-[11px] sm:text-[13px] font-bold">Pool D</span>
+                  <div class="border-[#a1abb5] bg-[#2b3136] border-t-2 w-full" style="height: 90%;"></div>
+                  <span class="text-[#a1abb5] text-[11px] sm:text-[13px] font-bold">Pool E</span>
+                  <div class="border-[#a1abb5] bg-[#2b3136] border-t-2 w-full" style="height: 100%;"></div>
+                  <span class="text-[#a1abb5] text-[11px] sm:text-[13px] font-bold">Pool F</span>
+                  <div class="border-[#a1abb5] bg-[#2b3136] border-t-2 w-full" style="height: 70%;"></div>
+                  <span class="text-[#a1abb5] text-[11px] sm:text-[13px] font-bold">Pool G</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Yield Scoreboard -->
+          <section class="bg-[#181c20] rounded-xl border border-[#23272f] shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
+            <h2 class="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4">Yield Scoreboard</h2>
+            <!-- Desktop Table -->
+            <div class="hidden lg:block overflow-x-auto rounded-lg">
+              <table class="min-w-full text-left text-sm border-separate border-spacing-y-2">
+                <thead>
+                  <tr class="bg-[#23272f]">
+                    <th class="px-4 py-3 text-white font-semibold">LP Token Pair</th>
+                    <th class="px-4 py-3 text-white font-semibold">Total APY</th>
+                    <th class="px-4 py-3 text-white font-semibold">Yield Projections</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="border-t border-t-[#3f4850] even:bg-[#23272f]">
+                    <td class="h-[56px] px-4 py-2 text-white">Pool A (Token X/Token Y)</td>
+                    <td class="h-[56px] px-4 py-2 text-[#a1abb5]">15.2%</td>
+                    <td class="h-[56px] px-4 py-2 text-[#a1abb5]">$500/month</td>
+                  </tr>
+                  <tr class="border-t border-t-[#3f4850] even:bg-[#23272f]">
+                    <td class="h-[56px] px-4 py-2 text-white">Pool B (Token Z/Token W)</td>
+                    <td class="h-[56px] px-4 py-2 text-[#a1abb5]">12.8%</td>
+                    <td class="h-[56px] px-4 py-2 text-[#a1abb5]">$450/month</td>
+                  </tr>
+                  <tr class="border-t border-t-[#3f4850] even:bg-[#23272f]">
+                    <td class="h-[56px] px-4 py-2 text-white">Pool C (Token V/Token U)</td>
+                    <td class="h-[56px] px-4 py-2 text-[#a1abb5]">10.5%</td>
+                    <td class="h-[56px] px-4 py-2 text-[#a1abb5]">$400/month</td>
+                  </tr>
+                  <tr class="border-t border-t-[#3f4850] even:bg-[#23272f]">
+                    <td class="h-[56px] px-4 py-2 text-white">Pool D (Token T/Token S)</td>
+                    <td class="h-[56px] px-4 py-2 text-[#a1abb5]">8.7%</td>
+                    <td class="h-[56px] px-4 py-2 text-[#a1abb5]">$350/month</td>
+                  </tr>
+                  <tr class="border-t border-t-[#3f4850] even:bg-[#23272f]">
+                    <td class="h-[56px] px-4 py-2 text-white">Pool E (Token R/Token Q)</td>
+                    <td class="h-[56px] px-4 py-2 text-[#a1abb5]">6.3%</td>
+                    <td class="h-[56px] px-4 py-2 text-[#a1abb5]">$300/month</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            
+            <!-- Mobile Yield Cards -->
+            <div class="lg:hidden space-y-3">
+              <!-- Pool A Card -->
+              <div class="bg-[#23272f] border border-[#3f4850] rounded-lg p-4 space-y-2">
+                <div class="flex justify-between items-start">
+                  <div class="flex-1">
+                    <p class="text-white text-sm font-medium">Pool A (Token X/Token Y)</p>
+                    <p class="text-[#a1abb5] text-xs">LP Token Pair</p>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-[#a1abb5] text-sm font-medium">15.2%</p>
+                    <p class="text-[#a1abb5] text-xs">Total APY</p>
+                  </div>
+                </div>
+                <div class="flex justify-between items-center">
+                  <p class="text-[#a1abb5] text-sm">Yield Projections</p>
+                  <p class="text-[#a1abb5] text-sm font-medium">$500/month</p>
+                </div>
+              </div>
+              
+              <!-- Pool B Card -->
+              <div class="bg-[#23272f] border border-[#3f4850] rounded-lg p-4 space-y-2">
+                <div class="flex justify-between items-start">
+                  <div class="flex-1">
+                    <p class="text-white text-sm font-medium">Pool B (Token Z/Token W)</p>
+                    <p class="text-[#a1abb5] text-xs">LP Token Pair</p>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-[#a1abb5] text-sm font-medium">12.8%</p>
+                    <p class="text-[#a1abb5] text-xs">Total APY</p>
+                  </div>
+                </div>
+                <div class="flex justify-between items-center">
+                  <p class="text-[#a1abb5] text-sm">Yield Projections</p>
+                  <p class="text-[#a1abb5] text-sm font-medium">$450/month</p>
+                </div>
+              </div>
+              
+              <!-- Pool C Card -->
+              <div class="bg-[#23272f] border border-[#3f4850] rounded-lg p-4 space-y-2">
+                <div class="flex justify-between items-start">
+                  <div class="flex-1">
+                    <p class="text-white text-sm font-medium">Pool C (Token V/Token U)</p>
+                    <p class="text-[#a1abb5] text-xs">LP Token Pair</p>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-[#a1abb5] text-sm font-medium">10.5%</p>
+                    <p class="text-[#a1abb5] text-xs">Total APY</p>
+                  </div>
+                </div>
+                <div class="flex justify-between items-center">
+                  <p class="text-[#a1abb5] text-sm">Yield Projections</p>
+                  <p class="text-[#a1abb5] text-sm font-medium">$400/month</p>
+                </div>
+              </div>
+              
+              <!-- Pool D Card -->
+              <div class="bg-[#23272f] border border-[#3f4850] rounded-lg p-4 space-y-2">
+                <div class="flex justify-between items-start">
+                  <div class="flex-1">
+                    <p class="text-white text-sm font-medium">Pool D (Token T/Token S)</p>
+                    <p class="text-[#a1abb5] text-xs">LP Token Pair</p>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-[#a1abb5] text-sm font-medium">8.7%</p>
+                    <p class="text-[#a1abb5] text-xs">Total APY</p>
+                  </div>
+                </div>
+                <div class="flex justify-between items-center">
+                  <p class="text-[#a1abb5] text-sm">Yield Projections</p>
+                  <p class="text-[#a1abb5] text-sm font-medium">$350/month</p>
+                </div>
+              </div>
+              
+              <!-- Pool E Card -->
+              <div class="bg-[#23272f] border border-[#3f4850] rounded-lg p-4 space-y-2">
+                <div class="flex justify-between items-start">
+                  <div class="flex-1">
+                    <p class="text-white text-sm font-medium">Pool E (Token R/Token Q)</p>
+                    <p class="text-[#a1abb5] text-xs">LP Token Pair</p>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-[#a1abb5] text-sm font-medium">6.3%</p>
+                    <p class="text-[#a1abb5] text-xs">Total APY</p>
+                  </div>
+                </div>
+                <div class="flex justify-between items-center">
+                  <p class="text-[#a1abb5] text-sm">Yield Projections</p>
+                  <p class="text-[#a1abb5] text-sm font-medium">$300/month</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Risk Dashboard -->
+          <section class="bg-[#181c20] rounded-xl border border-[#23272f] shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
+            <h2 class="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4">Risk Dashboard</h2>
+            <div class="flex flex-wrap gap-3 sm:gap-4 mb-3 sm:mb-4">
+              <div class="flex min-w-0 sm:min-w-72 flex-1 flex-col gap-2 rounded-lg border border-[#3f4850] bg-[#23272f] p-4 sm:p-6">
+                <p class="text-sm sm:text-base font-medium text-white mb-1">CCR Chart</p>
+                <p class="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1">0.95</p>
+                <div class="flex gap-2 mb-2">
+                  <span class="text-[#a1abb5] text-sm sm:text-base">Last 7 Days</span>
+                  <span class="text-[#fa6238] text-sm sm:text-base font-medium">-2%</span>
+                </div>
+                <div class="flex min-h-[120px] sm:min-h-[180px] flex-1 flex-col gap-6 sm:gap-8 py-3 sm:py-4">
+                  <svg width="100%" height="120" viewBox="-3 0 478 150" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" class="sm:h-[148px]">
+                    <path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25V149H326.769H0V109Z" fill="url(#paint0_linear_1131_5935)"></path>
+                    <path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25" stroke="#a1abb5" stroke-width="3" stroke-linecap="round"></path>
+                    <defs>
+                      <linearGradient id="paint0_linear_1131_5935" x1="236" y1="1" x2="236" y2="149" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#2b3136"></stop>
+                        <stop offset="1" stop-color="#2b3136" stop-opacity="0"></stop>
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                  <div class="flex justify-around text-xs sm:text-[13px]">
+                    <span class="text-[#a1abb5] font-bold">Day 1</span>
+                    <span class="text-[#a1abb5] font-bold">Day 2</span>
+                    <span class="text-[#a1abb5] font-bold">Day 3</span>
+                    <span class="text-[#a1abb5] font-bold">Day 4</span>
+                    <span class="text-[#a1abb5] font-bold">Day 5</span>
+                    <span class="text-[#a1abb5] font-bold">Day 6</span>
+                    <span class="text-[#a1abb5] font-bold">Day 7</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 sm:gap-4 bg-[#23272f] px-3 sm:px-4 min-h-[60px] sm:min-h-[72px] py-2 rounded-lg mb-2">
+              <div class="text-white flex items-center justify-center rounded-lg bg-[#2b3136] shrink-0 size-10 sm:size-12">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256" class="sm:w-6 sm:h-6">
+                  <path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM222.93,203.8a8.5,8.5,0,0,1-7.48,4.2H40.55a8.5,8.5,0,0,1-7.48-4.2,7.59,7.59,0,0,1,0-7.72L120.52,44.21a8.75,8.75,0,0,1,15,0l87.45,151.87A7.59,7.59,0,0,1,222.93,203.8ZM120,144V104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,180Z"></path>
+                </svg>
+              </div>
+              <div class="flex flex-col justify-center flex-1 min-w-0">
+                <span class="text-white text-sm sm:text-base font-medium">Oracle Drift Alert</span>
+                <span class="text-[#a1abb5] text-xs sm:text-sm">High oracle drift detected in Pool A</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 sm:gap-4 bg-[#23272f] px-3 sm:px-4 min-h-[60px] sm:min-h-[72px] py-2 rounded-lg">
+              <div class="text-white flex items-center justify-center rounded-lg bg-[#2b3136] shrink-0 size-10 sm:size-12">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256" class="sm:w-6 sm:h-6">
+                  <path d="M80,64a8,8,0,0,1,8-8H216a8,8,0,0,1,0,16H88A8,8,0,0,1,80,64Zm136,56H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Zm0,64H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16ZM44,52A12,12,0,1,0,56,64,12,12,0,0,0,44,52Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,116Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,180Z"></path>
+                </svg>
+              </div>
+              <div class="flex flex-col justify-center flex-1 min-w-0">
+                <span class="text-white text-sm sm:text-base font-medium">Slashing Event Log</span>
+                <span class="text-[#a1abb5] text-xs sm:text-sm">Slashing event in Pool B due to protocol error</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Historical Data Tools -->
+          <section class="bg-[#181c20] rounded-xl border border-[#23272f] shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
+            <h2 class="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4">Historical Data Tools</h2>
+            <div class="flex gap-2 sm:gap-3 flex-wrap mb-3 sm:mb-4">
+              <button class="bg-[#23272f] text-white px-3 sm:px-5 py-2 rounded-lg font-semibold hover:bg-[#2b3136] focus:outline-none focus:ring-2 focus:ring-[#3182cd] text-sm sm:text-base">Last 30 Days</button>
+              <button class="bg-[#23272f] text-white px-3 sm:px-5 py-2 rounded-lg font-semibold hover:bg-[#2b3136] focus:outline-none focus:ring-2 focus:ring-[#3182cd] text-sm sm:text-base">Last 90 Days</button>
+              <button class="bg-[#23272f] text-white px-3 sm:px-5 py-2 rounded-lg font-semibold hover:bg-[#2b3136] focus:outline-none focus:ring-2 focus:ring-[#3182cd] text-sm sm:text-base">Custom Range</button>
+            </div>
+            <div class="flex border-b border-[#3f4850] gap-4 sm:gap-8 mb-3 sm:mb-4 overflow-x-auto">
+              <a class="text-white text-xs sm:text-sm font-bold pb-2 border-b-2 border-[#3182cd] whitespace-nowrap" href="#">Volume</a>
+              <a class="text-[#a1abb5] text-xs sm:text-sm font-bold pb-2 border-b-2 border-transparent whitespace-nowrap" href="#">Staking Yields</a>
+              <a class="text-[#a1abb5] text-xs sm:text-sm font-bold pb-2 border-b-2 border-transparent whitespace-nowrap" href="#">Token Prices</a>
+            </div>
+            <div class="flex flex-wrap gap-3 sm:gap-4">
+              <div class="flex min-w-0 sm:min-w-72 flex-1 flex-col gap-2 rounded-lg border border-[#3f4850] bg-[#23272f] p-4 sm:p-6">
+                <p class="text-sm sm:text-base font-medium text-white mb-1">Historical Volume</p>
+                <p class="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1">$1.5M</p>
+                <div class="flex gap-2 mb-2">
+                  <span class="text-[#a1abb5] text-sm sm:text-base">Last 30 Days</span>
+                  <span class="text-[#0bda5b] text-sm sm:text-base font-medium">+5%</span>
+                </div>
+                <!-- Responsive Chart -->
+                <div class="grid min-h-[120px] sm:min-h-[180px] grid-flow-col gap-3 sm:gap-6 grid-rows-[1fr_auto] items-end justify-items-center px-2 sm:px-3">
+                  <div class="border-[#a1abb5] bg-[#2b3136] border-t-2 w-full" style="height: 50%;"></div>
+                  <span class="text-[#a1abb5] text-[11px] sm:text-[13px] font-bold">Week 1</span>
+                  <div class="border-[#a1abb5] bg-[#2b3136] border-t-2 w-full" style="height: 20%;"></div>
+                  <span class="text-[#a1abb5] text-[11px] sm:text-[13px] font-bold">Week 2</span>
+                  <div class="border-[#a1abb5] bg-[#2b3136] border-t-2 w-full" style="height: 10%;"></div>
+                  <span class="text-[#a1abb5] text-[11px] sm:text-[13px] font-bold">Week 3</span>
+                  <div class="border-[#a1abb5] bg-[#2b3136] border-t-2 w-full" style="height: 100%;"></div>
+                  <span class="text-[#a1abb5] text-[11px] sm:text-[13px] font-bold">Week 4</span>
+                </div>
+              </div>
+            </div>
+            <div class="flex justify-end mt-3 sm:mt-4">
+              <button class="bg-[#3182cd] text-white px-4 sm:px-6 py-2 rounded-lg font-bold hover:bg-[#2563eb] focus:outline-none focus:ring-2 focus:ring-[#3182cd] text-sm sm:text-base">Export Data</button>
+            </div>
+          </section>
+
+          <!-- Portfolio Simulator -->
+          <section class="bg-[#181c20] rounded-xl border border-[#23272f] shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
+            <h2 class="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2">Portfolio Simulator</h2>
+            <p class="text-[#a1abb5] text-sm sm:text-base mb-4 sm:mb-6">Estimate your potential returns by simulating different staking amounts, pools, and parameters.</p>
+            <form autocomplete="off">
+              <div class="max-w-[480px] mx-auto w-full flex flex-col gap-4 sm:gap-6">
+                <label class="flex flex-col w-full" for="staking-amount">
+                  <span class="text-sm sm:text-base font-medium text-white mb-1">Staking Amount</span>
+                  <input
+                    id="staking-amount"
+                    name="staking-amount"
+                    type="number"
+                    min="0"
+                    step="any"
+                    placeholder="e.g. 1000"
+                    class="w-full border border-[#3f4850] rounded-lg bg-[#23272f] text-white h-12 sm:h-14 p-3 sm:p-4 text-sm sm:text-base font-normal focus:outline-none focus:ring-2 focus:ring-[#3182cd]"
+                    aria-label="Staking Amount"
+                  />
+                </label>
+                <label class="flex flex-col w-full" for="pool-select">
+                  <span class="text-sm sm:text-base font-medium text-white mb-1">Select Pool</span>
+                  <select
+                    id="pool-select"
+                    name="pool-select"
+                    class="w-full border border-[#3f4850] rounded-lg bg-[#23272f] text-white h-12 sm:h-14 p-3 sm:p-4 text-sm sm:text-base font-normal focus:outline-none focus:ring-2 focus:ring-[#3182cd]"
+                    aria-label="Select Pool"
+                  >
+                    <option value="" disabled selected>Select a Pool</option>
+                    <option value="one">Pool One</option>
+                    <option value="two">Pool Two</option>
+                    <option value="three">Pool Three</option>
+                  </select>
+                </label>
+                <label class="flex flex-col w-full" for="parameters">
+                  <span class="text-sm sm:text-base font-medium text-white mb-1">Parameters</span>
+                  <input
+                    id="parameters"
+                    name="parameters"
+                    type="text"
+                    placeholder="e.g. Risk Tolerance: Medium"
+                    class="w-full border border-[#3f4850] rounded-lg bg-[#23272f] text-white h-12 sm:h-14 p-3 sm:p-4 text-sm sm:text-base font-normal focus:outline-none focus:ring-2 focus:ring-[#3182cd]"
+                    aria-label="Parameters"
+                  />
+                </label>
+                <button type="submit" class="w-full bg-[#3182cd] text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-bold hover:bg-[#2563eb] focus:outline-none focus:ring-2 focus:ring-[#3182cd] text-sm sm:text-base" aria-label="Simulate Returns">
+                  Simulate Returns
+                </button>
+              </div>
+            </form>
+          </section>
+
+          <!-- Footer -->
+          <footer class="flex justify-center mt-6 sm:mt-8">
+            <div class="flex max-w-[960px] flex-1 flex-col">
+              <footer class="flex flex-col gap-4 sm:gap-6 px-4 sm:px-5 py-8 sm:py-10 text-center">
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+                  <a class="text-[#a1abb5] text-sm sm:text-base font-normal min-w-0 sm:min-w-40 hover:text-[#3182cd] transition-colors" href="#">Terms of Service</a>
+                  <a class="text-[#a1abb5] text-sm sm:text-base font-normal min-w-0 sm:min-w-40 hover:text-[#3182cd] transition-colors" href="#">Privacy Policy</a>
+                  <a class="text-[#a1abb5] text-sm sm:text-base font-normal min-w-0 sm:min-w-40 hover:text-[#3182cd] transition-colors" href="#">Contact Us</a>
+                </div>
+                <div class="flex flex-wrap justify-center gap-4">
+                  <a href="#" class="hover:text-[#3182cd] transition-colors">
+                    <span class="text-[#a1abb5] text-sm sm:text-base" data-icon="TwitterLogo" data-size="24px" data-weight="regular">Twitter</span>
+                  </a>
+                  <a href="#" class="hover:text-[#3182cd] transition-colors">
+                    <span class="text-[#a1abb5] text-sm sm:text-base" data-icon="DiscordLogo" data-size="24px" data-weight="regular">Discord</span>
+                  </a>
+                </div>
+                <span class="text-[#a1abb5] text-sm sm:text-base font-normal">© 2024 OPX. All rights reserved.</span>
+              </footer>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

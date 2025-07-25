@@ -1,0 +1,347 @@
+/* Essential responsive styles for launchpad page */
+
+/* Smooth hover animations for cards and buttons */
+.hover\:scale-105:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s ease-in-out;
+}
+
+.hover\:scale-110:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+/* Touch-friendly improvements for mobile */
+@media (max-width: 640px) {
+  .form-input {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+  
+  /* Larger touch targets for mobile */
+  button, a {
+    min-height: 44px;
+  }
+  
+  /* Better spacing for mobile */
+  .layout-content-container {
+    padding: 0 8px;
+  }
+  
+  /* Optimize countdown timer on mobile */
+  .countdown-timer {
+    gap: 0.5rem;
+  }
+  
+  /* Ensure proper text wrapping */
+  .min-w-0 {
+    min-width: 0;
+  }
+}
+
+/* Landscape orientation adjustments */
+@media (max-width: 768px) and (orientation: landscape) {
+  .layout-content-container {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  
+  /* Reduce vertical spacing in landscape */
+  .py-4 {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  
+  /* Optimize countdown timer for landscape */
+  .countdown-timer {
+    flex-direction: row;
+    gap: 1rem;
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  /* Ensure crisp rendering on high DPI displays */
+  .rounded-lg, .rounded-xl, .rounded-2xl {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+}
+
+/* Dark mode optimizations */
+@media (prefers-color-scheme: dark) {
+  /* Ensure proper contrast in dark mode */
+  .text-white {
+    color: #ffffff;
+  }
+  
+  .text-\[\#a2abb3\] {
+    color: #a2abb3;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .hover\:scale-105:hover,
+  .hover\:scale-110:hover,
+  .transition-transform,
+  .transition-colors {
+    transition: none !important;
+    transform: none !important;
+  }
+  
+  .animate-pulse {
+    animation: none !important;
+  }
+}
+
+/* Focus improvements for keyboard navigation */
+button:focus,
+a:focus,
+select:focus,
+input:focus {
+  outline: 2px solid #699dcd;
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .border-\[\#22303a\],
+  .border-\[\#40484f\] {
+    border-color: #ffffff;
+  }
+  
+  .bg-\[\#121416\],
+  .bg-\[\#172736\],
+  .bg-\[\#2c3135\] {
+    background-color: #000000;
+  }
+  
+  .text-\[\#a2abb3\] {
+    color: #ffffff;
+  }
+}
+
+/* Print styles */
+@media print {
+  .layout-content-container {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .bg-\[\#121416\],
+  .bg-\[\#172736\],
+  .bg-\[\#2c3135\] {
+    background: white !important;
+  }
+  
+  .text-white {
+    color: black !important;
+  }
+  
+  .text-\[\#a2abb3\] {
+    color: #333333 !important;
+  }
+  
+  /* Hide interactive elements in print */
+  button {
+    display: none !important;
+  }
+}
+
+/* Mobile tier card improvements */
+@media (max-width: 1024px) {
+  .lg\:hidden {
+    display: block;
+  }
+  
+  /* Ensure proper spacing for mobile cards */
+  .space-y-3 > * + * {
+    margin-top: 0.75rem;
+  }
+}
+
+/* Responsive grid improvements */
+@media (max-width: 640px) {
+  .grid-cols-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1024px) {
+  .sm\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Countdown timer improvements */
+.countdown-timer {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+@media (max-width: 640px) {
+  .countdown-timer {
+    gap: 0.25rem;
+  }
+  
+  .countdown-item {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+/* Featured project card improvements */
+.featured-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.featured-card:hover {
+  transform: translateY(-2px);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Progress bar improvements */
+.progress-bar {
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-fill {
+  transition: width 0.3s ease-in-out;
+}
+
+/* Button hover states */
+.hover\:bg-\[\#4a7bb3\]:hover {
+  background-color: #4a7bb3;
+}
+
+.hover\:bg-\[\#1a232a\]:hover {
+  background-color: #1a232a;
+}
+
+/* Card shadow improvements */
+.shadow-2xl {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.hover\:shadow-\[0_0_12px_\#699dcd\]:hover {
+  box-shadow: 0 0 12px #699dcd;
+}
+
+/* Social media icon improvements */
+.social-icon {
+  transition: all 0.2s ease-in-out;
+}
+
+.social-icon:hover {
+  transform: scale(1.1);
+  color: #ffffff;
+}
+
+/* Input focus improvements */
+.form-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #699dcd;
+}
+
+/* Status badge improvements */
+.status-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 20;
+  background: #699dcd;
+  color: #121416;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 640px) {
+  .status-badge {
+    top: 0.75rem;
+    left: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.625rem;
+  }
+}
+
+/* Glow effect improvements */
+.glow-effect {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: 50%;
+  height: 3rem;
+  background: linear-gradient(to right, rgba(105, 157, 205, 0.3), transparent, rgba(105, 157, 205, 0.3));
+  filter: blur(2rem);
+  opacity: 0.6;
+  animation: pulse 2s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 10;
+}
+
+@media (max-width: 640px) {
+  .glow-effect {
+    height: 2rem;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* Footer improvements */
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .footer-links {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}
+
+/* Participation form improvements */
+.participation-form {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+@media (max-width: 640px) {
+  .participation-form {
+    padding: 1rem;
+  }
+}
+
+/* Asset information card improvements */
+.asset-info-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: #172736;
+  border: 1px solid #40484f;
+  border-radius: 0.75rem;
+}
+
+@media (max-width: 640px) {
+  .asset-info-card {
+    padding: 0.75rem;
+    gap: 0.5rem;
+  }
+}

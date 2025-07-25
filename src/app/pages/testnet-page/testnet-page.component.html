@@ -1,0 +1,302 @@
+<div class="min-h-screen bg-black text-white">
+  <!-- Header Section -->
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
+    <div class="text-center mb-8 sm:mb-12">
+      <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+        OPX Testnet Interface
+      </h1>
+      <p class="text-gray-300 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto px-4">
+        Connect your Solana testnet wallet, send test tokens, create markets, and execute simulated orders.
+      </p>
+    </div>
+
+    <!-- Wallet Connection Section -->
+    <div class="max-w-4xl mx-auto bg-gray-900/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 border border-gray-800">
+      <div class="text-center mb-4 sm:mb-6">
+        <h2 class="text-xl sm:text-2xl font-semibold mb-2">Wallet Connection</h2>
+        <p class="text-gray-400 text-sm sm:text-base">Connect your Phantom wallet to get started</p>
+      </div>
+
+      <!-- Connect Wallet Button -->
+      <div class="flex justify-center mb-4 sm:mb-6" *ngIf="!(publicKey$ | async)">
+        <button 
+          (click)="connectWallet()" 
+          [disabled]="loading"
+          class="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 disabled:opacity-50 px-6 sm:px-8 py-2 sm:py-3 rounded-full font-semibold text-white transition-all duration-200 transform hover:scale-105 disabled:transform-none text-sm sm:text-base">
+          <span class="flex items-center gap-2">
+            <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a8 8 0 100 16 8 8 0 000-16zM8 12a2 2 0 114 0 2 2 0 01-4 0z"/>
+            </svg>
+            {{ loading ? 'Connecting...' : 'Connect Phantom Wallet' }}
+          </span>
+        </button>
+      </div>
+
+      <!-- Wallet Info -->
+      <div *ngIf="publicKey$ | async as publicKey" class="space-y-3 sm:space-y-4">
+        <div class="bg-green-900/20 border border-green-500/30 rounded-lg p-3 sm:p-4">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div class="flex items-center gap-2">
+              <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+              <span class="text-green-400 font-semibold text-sm sm:text-base">Wallet Connected</span>
+            </div>
+            <button 
+              (click)="disconnectWallet()" 
+              [disabled]="loading"
+              class="px-3 sm:px-4 py-2 bg-red-600 hover:bg-red-700 disabled:opacity-50 rounded-lg text-xs sm:text-sm font-medium transition-colors">
+              {{ loading ? 'Disconnecting...' : 'Disconnect' }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Wallet Details -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+          <div class="bg-gray-800/50 rounded-lg p-3 sm:p-4">
+            <div class="text-xs sm:text-sm text-gray-400 mb-1">Public Key</div>
+            <div class="font-mono text-xs sm:text-sm break-all">{{ publicKeyToBase58(publicKey) }}</div>
+          </div>
+          <div class="bg-gray-800/50 rounded-lg p-3 sm:p-4">
+            <div class="text-xs sm:text-sm text-gray-400 mb-1">SOL Balance</div>
+            <div class="font-mono text-sm sm:text-lg font-semibold">{{ (balance$ | async) ?? '...' }} SOL</div>
+          </div>
+          <div class="bg-gray-800/50 rounded-lg p-3 sm:p-4" *ngIf="usdcBalance !== null">
+            <div class="text-xs sm:text-sm text-gray-400 mb-1">USDC Balance</div>
+            <div class="font-mono text-sm sm:text-lg font-semibold">{{ usdcBalance }} USDC</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error Display -->
+      <div *ngIf="error" class="mt-3 sm:mt-4 bg-red-900/20 border border-red-500/30 rounded-lg p-3 sm:p-4">
+        <div class="flex items-center gap-2">
+          <svg class="w-4 h-4 sm:w-5 sm:h-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+          </svg>
+          <span class="text-red-400 font-medium text-sm sm:text-base">{{ error }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons Section -->
+    <div class="max-w-4xl mx-auto mb-6 sm:mb-8" *ngIf="publicKey$ | async">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <button
+          (click)="sendTestTokens()"
+          [disabled]="loading"
+          class="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 disabled:opacity-50 p-4 sm:p-6 rounded-xl text-white font-semibold transition-all duration-200 transform hover:scale-105 disabled:transform-none">
+          <div class="text-center">
+            <svg class="w-6 h-6 sm:w-8 sm:h-8 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/>
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+            </svg>
+            <div class="text-xs sm:text-sm">{{ loading ? 'Sending...' : 'Send Test Tokens' }}</div>
+          </div>
+        </button>
+
+        <button
+          (click)="createTokenMints()"
+          [disabled]="loading"
+          class="bg-gradient-to-r from-blue-500 to-cyan-600 hover:from-blue-600 hover:to-cyan-700 disabled:opacity-50 p-4 sm:p-6 rounded-xl text-white font-semibold transition-all duration-200 transform hover:scale-105 disabled:transform-none">
+          <div class="text-center">
+            <svg class="w-6 h-6 sm:w-8 sm:h-8 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"/>
+            </svg>
+            <div class="text-xs sm:text-sm">{{ loading ? 'Processing...' : 'Create Token Mints' }}</div>
+          </div>
+        </button>
+
+        <button
+          (click)="createMarket()"
+          [disabled]="loading"
+          class="bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 disabled:opacity-50 p-4 sm:p-6 rounded-xl text-white font-semibold transition-all duration-200 transform hover:scale-105 disabled:transform-none">
+          <div class="text-center">
+            <svg class="w-6 h-6 sm:w-8 sm:h-8 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+            </svg>
+            <div class="text-xs sm:text-sm">{{ loading ? 'Processing...' : 'Create Market' }}</div>
+          </div>
+        </button>
+
+        <button
+          (click)="executeOrder()"
+          [disabled]="loading"
+          class="bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 disabled:opacity-50 p-4 sm:p-6 rounded-xl text-white font-semibold transition-all duration-200 transform hover:scale-105 disabled:transform-none">
+          <div class="text-center">
+            <svg class="w-6 h-6 sm:w-8 sm:h-8 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <div class="text-xs sm:text-sm">{{ loading ? 'Processing...' : 'Execute Order' }}</div>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Market Operations Section -->
+    <div class="max-w-4xl mx-auto mb-6 sm:mb-8" *ngIf="publicKey$ | async">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+        <!-- Market Creation Section -->
+        <div class="bg-gray-900/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 border border-gray-800">
+          <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold mb-4 sm:mb-6 text-center">Create Market</h3>
+          
+          <form (ngSubmit)="createMarket()" class="space-y-4 sm:space-y-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              <div>
+                <label class="block text-xs sm:text-sm font-medium text-gray-300 mb-2">Base Mint Address</label>
+                <input 
+                  type="text" 
+                  [(ngModel)]="baseMint" 
+                  name="baseMint" 
+                  class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                  placeholder="Enter base mint address"
+                  required />
+              </div>
+              <div>
+                <label class="block text-xs sm:text-sm font-medium text-gray-300 mb-2">Quote Mint Address</label>
+                <input 
+                  type="text" 
+                  [(ngModel)]="quoteMint" 
+                  name="quoteMint" 
+                  class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                  placeholder="Enter quote mint address"
+                  required />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              <div>
+                <label class="block text-xs sm:text-sm font-medium text-gray-300 mb-2">Base Lot Size</label>
+                <input 
+                  type="number" 
+                  [(ngModel)]="baseLotSize" 
+                  name="baseLotSize" 
+                  class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                  required />
+              </div>
+              <div>
+                <label class="block text-xs sm:text-sm font-medium text-gray-300 mb-2">Quote Lot Size</label>
+                <input 
+                  type="number" 
+                  [(ngModel)]="quoteLotSize" 
+                  name="quoteLotSize" 
+                  class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                  required />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              <div>
+                <label class="block text-xs sm:text-sm font-medium text-gray-300 mb-2">Maker Fee (BPS)</label>
+                <input 
+                  type="number" 
+                  [(ngModel)]="makerFeeBps" 
+                  name="makerFeeBps" 
+                  class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                  required />
+              </div>
+              <div>
+                <label class="block text-xs sm:text-sm font-medium text-gray-300 mb-2">Taker Fee (BPS)</label>
+                <input 
+                  type="number" 
+                  [(ngModel)]="takerFeeBps" 
+                  name="takerFeeBps" 
+                  class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                  required />
+              </div>
+            </div>
+
+            <div class="flex justify-center">
+              <button 
+                type="submit" 
+                [disabled]="loading"
+                class="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 disabled:opacity-50 px-6 sm:px-8 py-2 sm:py-3 rounded-lg font-semibold text-white transition-all duration-200 transform hover:scale-105 disabled:transform-none text-sm sm:text-base">
+                {{ loading ? 'Creating Market...' : 'Create Market' }}
+              </button>
+            </div>
+
+            <!-- Market Creation Results -->
+            <div *ngIf="marketAddress" class="bg-green-900/20 border border-green-500/30 rounded-lg p-3 sm:p-4">
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-green-400 font-medium text-sm sm:text-base">Market Created Successfully!</span>
+              </div>
+              <div class="mt-2 text-xs sm:text-sm text-gray-300 break-all">{{ marketAddress }}</div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Market Operations Section -->
+        <div class="bg-gray-900/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 border border-gray-800">
+          <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold mb-4 sm:mb-6 text-center">Market Operations</h3>
+          
+          <!-- List Markets -->
+          <div class="mb-4 sm:mb-6">
+            <button
+              (click)="listMarkets()"
+              [disabled]="loading"
+              class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 disabled:opacity-50 px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-semibold text-white transition-all duration-200 transform hover:scale-105 disabled:transform-none text-sm sm:text-base mb-3">
+              {{ loading ? 'Fetching...' : 'List Markets' }}
+            </button>
+            
+            <div *ngIf="markets.length > 0" class="bg-gray-800/50 rounded-lg p-3 sm:p-4 max-h-32 overflow-y-auto">
+              <div class="text-xs sm:text-sm text-gray-300 mb-2">Found {{ markets.length }} markets:</div>
+              <div *ngFor="let market of markets.slice(0, 3)" class="text-xs font-mono text-gray-400 break-all mb-1">
+                {{ market.address || market.publicKey?.toBase58() }}
+              </div>
+              <div *ngIf="markets.length > 3" class="text-xs text-gray-500">
+                +{{ markets.length - 3 }} more...
+              </div>
+            </div>
+          </div>
+
+          <!-- Get Market Info -->
+          <div class="mb-4 sm:mb-6">
+            <label class="block text-xs sm:text-sm font-medium text-gray-300 mb-2">Market ID</label>
+            <input 
+              type="text" 
+              [(ngModel)]="orderbookMarketId" 
+              class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm mb-3"
+              placeholder="Enter market ID" />
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+              <button
+                (click)="getMarketInfo()"
+                [disabled]="loading"
+                class="bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 disabled:opacity-50 px-3 sm:px-4 py-2 sm:py-3 rounded-lg font-semibold text-white transition-all duration-200 transform hover:scale-105 disabled:transform-none text-xs sm:text-sm">
+                {{ loading ? 'Loading...' : 'Get Market Info' }}
+              </button>
+              <button
+                (click)="getOrderbook()"
+                [disabled]="loading"
+                class="bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 disabled:opacity-50 px-3 sm:px-4 py-2 sm:py-3 rounded-lg font-semibold text-white transition-all duration-200 transform hover:scale-105 disabled:transform-none text-xs sm:text-sm">
+                {{ loading ? 'Loading...' : 'Get Orderbook' }}
+              </button>
+            </div>
+          </div>
+
+          <!-- Orderbook Data Display -->
+          <div *ngIf="orderbookData" class="bg-gray-800/50 rounded-lg p-3 sm:p-4">
+            <div class="text-xs sm:text-sm text-gray-300 mb-2">Orderbook Data:</div>
+            <div class="text-xs font-mono text-gray-400">
+              Size: {{ orderbookData.dataSize }} bytes<br>
+              Lamports: {{ orderbookData.lamports }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Console Logs Section -->
+    <div class="max-w-4xl mx-auto bg-gray-900/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 border border-gray-800">
+      <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold mb-4 sm:mb-6 text-center">Console Logs</h3>
+      <div class="bg-gray-950 rounded-lg p-3 sm:p-4 h-48 sm:h-64 overflow-y-auto logs-container">
+        <div *ngIf="logs.length === 0" class="text-gray-500 text-center py-8 text-sm sm:text-base">
+          No logs yet. Connect your wallet and perform actions to see logs here.
+        </div>
+        <div *ngFor="let log of logs" class="text-xs sm:text-sm font-mono text-gray-300 mb-1 break-words">
+          <span class="text-gray-500">[{{ getCurrentTime() }}]</span> {{ log }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

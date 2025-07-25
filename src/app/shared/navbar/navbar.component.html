@@ -1,0 +1,171 @@
+<header class="bg-[#111418] flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#283039] px-4 sm:px-6 lg:px-10 py-3 relative">
+  <!-- Logo Section -->
+  <div class="flex items-center gap-2 sm:gap-4 text-white">
+    <div class="size-4 sm:size-5">
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M42.4379 44C42.4379 44 36.0744 33.9038 41.1692 24C46.8624 12.9336 42.2078 4 42.2078 4L7.01134 4C7.01134 4 11.6577 12.932 5.96912 23.9969C0.876273 33.9029 7.27094 44 7.27094 44L42.4379 44Z"
+          fill="currentColor"
+        ></path>
+      </svg>
+    </div>
+    <h2 class="text-white text-base sm:text-lg font-bold leading-tight tracking-[-0.015em]">OPX</h2>
+  </div>
+
+  <!-- Desktop Navigation -->
+  <div class="hidden lg:flex flex-1 justify-end gap-6 xl:gap-8">
+    <div class="flex items-center gap-6 xl:gap-9">
+      <a class="text-white text-sm font-medium leading-normal hover:text-[#0c7ff2] transition-colors duration-200" routerLink="/" routerLinkActive="text-[#0c7ff2]">Home</a>
+      <a class="text-white text-sm font-medium leading-normal hover:text-[#0c7ff2] transition-colors duration-200" routerLink="/dex-trading" routerLinkActive="text-[#0c7ff2]">DEX Trading</a>
+      <a class="text-white text-sm font-medium leading-normal hover:text-[#0c7ff2] transition-colors duration-200" routerLink="/user-dashboard" routerLinkActive="text-[#0c7ff2]">Dashboard</a>
+      <a class="text-white text-sm font-medium leading-normal hover:text-[#0c7ff2] transition-colors duration-200" routerLink="/launchpad" routerLinkActive="text-[#0c7ff2]">Launchpad</a>
+      <a class="text-white text-sm font-medium leading-normal hover:text-[#0c7ff2] transition-colors duration-200" routerLink="/kyc" routerLinkActive="text-[#0c7ff2]">KYC</a>
+      <a class="text-white text-sm font-medium leading-normal hover:text-[#0c7ff2] transition-colors duration-200" routerLink="/analytics" routerLinkActive="text-[#0c7ff2]">Analytics</a>
+      <a class="text-white text-sm font-medium leading-normal hover:text-[#0c7ff2] transition-colors duration-200" routerLink="/testnet" routerLinkActive="text-[#0c7ff2]">Testnet</a>
+    </div>
+    
+    <!-- Desktop Wallet Section -->
+    <div class="flex items-center gap-2">
+      <button *ngIf="!(publicKey$ | async); else connectedBlock" (click)="connectWallet()" [disabled]="loading"
+        class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#0c7ff2] text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#0a6fd8] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#0c7ff2] focus:ring-offset-2 focus:ring-offset-[#111418]">
+        <span class="truncate">{{ loading ? 'Connecting...' : 'Connect Wallet' }}</span>
+      </button>
+      <ng-template #connectedBlock>
+        <div class="flex items-center gap-2">
+          <span class="text-green-400 font-bold text-xs">{{ (publicKey$ | async)?.toBase58() | slice:0:4 }}...{{ (publicKey$ | async)?.toBase58() | slice:-4 }}</span>
+          <span class="text-white text-xs font-mono">{{ (balance$ | async) ?? '...' }} SOL</span>
+          <button (click)="disconnectWallet()" [disabled]="loading"
+            class="px-2 py-1 rounded bg-gray-700 text-white text-xs font-medium hover:bg-gray-800 disabled:opacity-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500">
+            {{ loading ? '...' : 'Disconnect' }}
+          </button>
+        </div>
+      </ng-template>
+      <span *ngIf="error" class="text-red-400 text-xs font-semibold ml-2">{{ error }}</span>
+    </div>
+  </div>
+
+  <!-- Mobile Wallet Button (Always Visible) -->
+  <div class="flex lg:hidden items-center gap-2">
+    <button *ngIf="!(publicKey$ | async); else mobileConnectedBlock" (click)="connectWallet()" [disabled]="loading"
+      class="flex min-w-[80px] max-w-[200px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 sm:h-10 px-3 sm:px-4 bg-[#0c7ff2] text-white text-xs sm:text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#0a6fd8] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#0c7ff2] focus:ring-offset-2 focus:ring-offset-[#111418]">
+      <span class="truncate">{{ loading ? 'Connecting...' : 'Connect' }}</span>
+    </button>
+    <ng-template #mobileConnectedBlock>
+      <div class="flex items-center gap-1 sm:gap-2">
+        <span class="text-green-400 font-bold text-xs">{{ (publicKey$ | async)?.toBase58() | slice:0:3 }}...{{ (publicKey$ | async)?.toBase58() | slice:-3 }}</span>
+        <span class="text-white text-xs font-mono">{{ (balance$ | async) ?? '...' }} SOL</span>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- Mobile Menu Button -->
+  <button 
+    (click)="toggleMobileMenu()" 
+    class="lg:hidden flex flex-col justify-center items-center w-8 h-8 p-1 rounded-md hover:bg-gray-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#0c7ff2]"
+    [attr.aria-expanded]="isMobileMenuOpen"
+    aria-label="Toggle mobile menu">
+    <span class="block w-5 h-0.5 bg-white transition-all duration-300" [class.rotate-45]="isMobileMenuOpen" [class.translate-y-1.5]="isMobileMenuOpen"></span>
+    <span class="block w-5 h-0.5 bg-white transition-all duration-300 mt-1" [class.opacity-0]="isMobileMenuOpen"></span>
+    <span class="block w-5 h-0.5 bg-white transition-all duration-300 mt-1" [class.-rotate-45]="isMobileMenuOpen" [class.-translate-y-1.5]="isMobileMenuOpen"></span>
+  </button>
+
+  <!-- Mobile Menu Overlay -->
+  <div 
+    class="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300"
+    [class.opacity-0]="!isMobileMenuOpen"
+    [class.pointer-events-none]="!isMobileMenuOpen"
+    (click)="closeMobileMenu()">
+  </div>
+
+  <!-- Mobile Menu Panel -->
+  <div 
+    class="lg:hidden fixed top-0 right-0 h-full w-64 sm:w-80 bg-[#111418] border-l border-[#283039] z-50 transform transition-transform duration-300 ease-in-out"
+    [class.translate-x-full]="!isMobileMenuOpen"
+    [class.translate-x-0]="isMobileMenuOpen">
+    
+    <!-- Mobile Menu Header -->
+    <div class="flex items-center justify-between p-4 border-b border-[#283039]">
+      <h3 class="text-white text-lg font-semibold">Menu</h3>
+      <button 
+        (click)="closeMobileMenu()" 
+        class="text-white hover:text-gray-300 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#0c7ff2] rounded-md p-1">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Links -->
+    <nav class="flex flex-col p-4 space-y-2">
+      <a 
+        class="text-white text-base font-medium leading-normal py-3 px-4 rounded-lg hover:bg-[#1a202c] hover:text-[#0c7ff2] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#0c7ff2] focus:ring-inset" 
+        routerLink="/" 
+        routerLinkActive="bg-[#1a202c] text-[#0c7ff2]"
+        (click)="closeMobileMenu()">
+        Home
+      </a>
+      <a 
+        class="text-white text-base font-medium leading-normal py-3 px-4 rounded-lg hover:bg-[#1a202c] hover:text-[#0c7ff2] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#0c7ff2] focus:ring-inset" 
+        routerLink="/dex-trading" 
+        routerLinkActive="bg-[#1a202c] text-[#0c7ff2]"
+        (click)="closeMobileMenu()">
+        DEX Trading
+      </a>
+      <a 
+        class="text-white text-base font-medium leading-normal py-3 px-4 rounded-lg hover:bg-[#1a202c] hover:text-[#0c7ff2] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#0c7ff2] focus:ring-inset" 
+        routerLink="/user-dashboard" 
+        routerLinkActive="bg-[#1a202c] text-[#0c7ff2]"
+        (click)="closeMobileMenu()">
+        Dashboard
+      </a>
+      <a 
+        class="text-white text-base font-medium leading-normal py-3 px-4 rounded-lg hover:bg-[#1a202c] hover:text-[#0c7ff2] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#0c7ff2] focus:ring-inset" 
+        routerLink="/launchpad" 
+        routerLinkActive="bg-[#1a202c] text-[#0c7ff2]"
+        (click)="closeMobileMenu()">
+        Launchpad
+      </a>
+      <a 
+        class="text-white text-base font-medium leading-normal py-3 px-4 rounded-lg hover:bg-[#1a202c] hover:text-[#0c7ff2] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#0c7ff2] focus:ring-inset" 
+        routerLink="/kyc" 
+        routerLinkActive="bg-[#1a202c] text-[#0c7ff2]"
+        (click)="closeMobileMenu()">
+        KYC
+      </a>
+      <a 
+        class="text-white text-base font-medium leading-normal py-3 px-4 rounded-lg hover:bg-[#1a202c] hover:text-[#0c7ff2] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#0c7ff2] focus:ring-inset" 
+        routerLink="/analytics" 
+        routerLinkActive="bg-[#1a202c] text-[#0c7ff2]"
+        (click)="closeMobileMenu()">
+        Analytics
+      </a>
+      <a 
+        class="text-white text-base font-medium leading-normal py-3 px-4 rounded-lg hover:bg-[#1a202c] hover:text-[#0c7ff2] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#0c7ff2] focus:ring-inset" 
+        routerLink="/testnet" 
+        routerLinkActive="bg-[#1a202c] text-[#0c7ff2]"
+        (click)="closeMobileMenu()">
+        Testnet
+      </a>
+    </nav>
+
+    <!-- Mobile Wallet Section -->
+    <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-[#283039]">
+      <div *ngIf="publicKey$ | async as publicKey" class="space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="text-green-400 font-bold text-sm">Connected</span>
+          <button (click)="disconnectWallet()" [disabled]="loading"
+            class="px-3 py-1 rounded bg-gray-700 text-white text-xs font-medium hover:bg-gray-800 disabled:opacity-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500">
+            {{ loading ? '...' : 'Disconnect' }}
+          </button>
+        </div>
+        <div class="text-white text-xs font-mono">
+          {{ publicKey.toBase58() | slice:0:8 }}...{{ publicKey.toBase58() | slice:-8 }}
+        </div>
+        <div class="text-white text-xs">
+          Balance: {{ (balance$ | async) ?? '...' }} SOL
+        </div>
+      </div>
+      <div *ngIf="error" class="text-red-400 text-xs font-semibold mt-2">{{ error }}</div>
+    </div>
+  </div>
+</header>

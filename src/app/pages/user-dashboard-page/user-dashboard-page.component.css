@@ -1,0 +1,198 @@
+/* Essential responsive styles for dashboard page */
+
+/* Smooth hover animations for cards */
+.hover\:scale-105:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s ease-in-out;
+}
+
+/* Touch-friendly improvements for mobile */
+@media (max-width: 640px) {
+  .form-input {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+  
+  /* Larger touch targets for mobile */
+  button, a {
+    min-height: 44px;
+  }
+  
+  /* Better spacing for mobile */
+  .layout-content-container {
+    padding: 0 8px;
+  }
+  
+  /* Optimize card spacing on mobile */
+  .grid {
+    gap: 0.75rem;
+  }
+}
+
+/* Landscape orientation adjustments */
+@media (max-width: 768px) and (orientation: landscape) {
+  .layout-content-container {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  
+  /* Reduce vertical spacing in landscape */
+  .py-4 {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  /* Ensure crisp rendering on high DPI displays */
+  .rounded-lg, .rounded-xl, .rounded-2xl {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+}
+
+/* Dark mode optimizations */
+@media (prefers-color-scheme: dark) {
+  /* Ensure proper contrast in dark mode */
+  .text-white {
+    color: #ffffff;
+  }
+  
+  .text-\[\#9aaec1\] {
+    color: #9aaec1;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .hover\:scale-105:hover,
+  .transition-transform,
+  .transition-colors {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* Focus improvements for keyboard navigation */
+button:focus,
+a:focus,
+select:focus,
+input:focus {
+  outline: 2px solid #3282cc;
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .border-\[\#22303a\],
+  .border-\[\#3a4d5f\] {
+    border-color: #ffffff;
+  }
+  
+  .bg-\[\#131a20\],
+  .bg-\[\#1d272f\],
+  .bg-\[\#293642\] {
+    background-color: #000000;
+  }
+  
+  .text-\[\#9aaec1\] {
+    color: #ffffff;
+  }
+}
+
+/* Print styles */
+@media print {
+  .layout-content-container {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .bg-\[\#131a20\],
+  .bg-\[\#1d272f\],
+  .bg-\[\#293642\] {
+    background: white !important;
+  }
+  
+  .text-white {
+    color: black !important;
+  }
+  
+  .text-\[\#9aaec1\] {
+    color: #333333 !important;
+  }
+  
+  /* Hide interactive elements in print */
+  button {
+    display: none !important;
+  }
+}
+
+/* Mobile table card improvements */
+@media (max-width: 1024px) {
+  .lg\:hidden {
+    display: block;
+  }
+  
+  /* Ensure proper spacing for mobile cards */
+  .space-y-3 > * + * {
+    margin-top: 0.75rem;
+  }
+}
+
+/* Responsive grid improvements */
+@media (max-width: 640px) {
+  .grid-cols-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1024px) {
+  .sm\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Alert card improvements */
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+/* Search input improvements */
+.form-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #3282cc;
+}
+
+/* Button hover states */
+.hover\:bg-\[\#2466a3\]:hover {
+  background-color: #2466a3;
+}
+
+.hover\:bg-\[\#1d272f\]:hover {
+  background-color: #1d272f;
+}
+
+/* Card shadow improvements */
+.shadow-\[0_0_8px_rgba\(0\,0\,0\,0\.12\)\] {
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.12);
+}
+
+.hover\:shadow-xl:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}

@@ -1,0 +1,131 @@
+/* Essential responsive styles for DEX trading page */
+
+/* Smooth animations for pool cards */
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Touch-friendly improvements for mobile */
+@media (max-width: 640px) {
+  .form-input {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+  
+  /* Larger touch targets for mobile */
+  button, a {
+    min-height: 44px;
+  }
+  
+  /* Better spacing for mobile */
+  .layout-content-container {
+    padding: 0 8px;
+  }
+}
+
+/* Landscape orientation adjustments */
+@media (max-width: 768px) and (orientation: landscape) {
+  .layout-content-container {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  
+  /* Reduce vertical spacing in landscape */
+  .py-4 {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  /* Ensure crisp rendering on high DPI displays */
+  .rounded-lg, .rounded-xl, .rounded-2xl {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+}
+
+/* Dark mode optimizations */
+@media (prefers-color-scheme: dark) {
+  /* Ensure proper contrast in dark mode */
+  .text-white {
+    color: #ffffff;
+  }
+  
+  .text-\[\#8daece\] {
+    color: #8daece;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-pulse,
+  .transition-all,
+  .transition-colors,
+  .transition-transform {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .hover\:scale-105:hover {
+    transform: none !important;
+  }
+}
+
+/* Focus improvements for keyboard navigation */
+button:focus,
+a:focus,
+select:focus,
+input:focus {
+  outline: 2px solid #359dff;
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .border-\[\#2e4e6b\] {
+    border-color: #ffffff;
+  }
+  
+  .bg-\[\#172736\] {
+    background-color: #000000;
+  }
+  
+  .text-\[\#8daece\] {
+    color: #ffffff;
+  }
+}
+
+/* Print styles */
+@media print {
+  .layout-content-container {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .bg-\[\#0f1a24\],
+  .bg-\[\#172736\],
+  .bg-\[\#22303a\] {
+    background: white !important;
+  }
+  
+  .text-white {
+    color: black !important;
+  }
+  
+  .text-\[\#8daece\] {
+    color: #333333 !important;
+  }
+}
