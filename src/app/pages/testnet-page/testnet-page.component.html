@@ -102,6 +102,7 @@
               <path d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"/>
             </svg>
             <div class="text-xs sm:text-sm">{{ loading ? 'Processing...' : 'Create Token Mints' }}</div>
+            <div class="text-xs text-gray-300 mt-1">(Simulated)</div>
           </div>
         </button>
 
@@ -280,6 +281,535 @@
             <div class="text-xs font-mono text-gray-400">
               Size: {{ orderbookData.dataSize }} bytes<br>
               Lamports: {{ orderbookData.lamports }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Order Placement Section -->
+    <div class="max-w-4xl mx-auto mb-6 sm:mb-8" *ngIf="publicKey$ | async">
+      <div class="bg-gray-900/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 border border-gray-800">
+        <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold mb-4 sm:mb-6 text-center">Place Orders</h3>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+          <!-- Order Form -->
+          <div class="space-y-4 sm:space-y-6">
+            <!-- Instructions -->
+            <div class="bg-blue-900/20 border border-blue-500/30 rounded-lg p-3 sm:p-4">
+              <div class="flex items-center gap-2 mb-2">
+                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-blue-400 font-medium text-sm sm:text-base">Order Placement Instructions</span>
+              </div>
+              <div class="text-xs sm:text-sm text-gray-300 space-y-1">
+                <div>1. Create a market first using the "Create Market" section</div>
+                <div>2. Click "Use Created Market" to populate the market ID</div>
+                <div>3. Click "Setup Real Order Placement" to create accounts</div>
+                <div>4. Set order side, type, price, and size</div>
+                <div>5. Click "Place Real Order" to place on blockchain</div>
+                <div class="text-green-400 mt-2">✅ Real blockchain orders available!</div>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs sm:text-sm font-medium text-gray-300 mb-2">Market ID</label>
+              <div class="flex gap-2">
+                <input 
+                  type="text" 
+                  [(ngModel)]="orderMarketId" 
+                  class="flex-1 bg-gray-800 border border-gray-700 rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                  placeholder="Enter market ID for trading" />
+                <button
+                  (click)="populateTestMarketId()"
+                  [disabled]="loading"
+                  class="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 disabled:opacity-50 px-3 sm:px-4 py-2 sm:py-3 rounded-lg font-semibold text-white transition-all duration-200 transform hover:scale-105 disabled:transform-none text-xs sm:text-sm">
+                  {{ loading ? 'Loading...' : 'Use Created Market' }}
+                </button>
+              </div>
+              <div class="flex gap-2 mt-2">
+                <button
+                  (click)="validateMarketExists()"
+                  [disabled]="loading || !orderMarketId"
+                  class="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 disabled:opacity-50 px-3 sm:px-4 py-2 sm:py-3 rounded-lg font-semibold text-white transition-all duration-200 transform hover:scale-105 disabled:transform-none text-xs sm:text-sm">
+                  {{ loading ? 'Validating...' : 'Validate Market' }}
+                </button>
+              </div>
+            </div>
+
+            <!-- Quick Market Creation -->
+            <div class="bg-yellow-900/20 border border-yellow-500/30 rounded-lg p-3 sm:p-4">
+              <div class="flex items-center gap-2 mb-2">
+                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 2a8 8 0 100 16 8 8 0 000-16zM8 12a2 2 0 114 0 2 2 0 01-4 0z"/>
+                </svg>
+                <span class="text-yellow-400 font-medium text-sm sm:text-base">Quick Market Creation</span>
+              </div>
+              <div class="space-y-2">
+                <div class="text-xs sm:text-sm text-gray-300">
+                  Don't have a market? Create one quickly for testing:
+                </div>
+                <button
+                  (click)="createAndUseTestMarket()"
+                  [disabled]="loading"
+                  class="bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 disabled:opacity-50 px-3 sm:px-4 py-2 sm:py-3 rounded-lg font-semibold text-white transition-all duration-200 transform hover:scale-105 disabled:transform-none text-xs sm:text-sm">
+                  {{ loading ? 'Creating...' : 'Create Test Market' }}
+                </button>
+              </div>
+            </div>
+
+            <!-- Real Order Setup -->
+            <div class="bg-green-900/20 border border-green-500/30 rounded-lg p-3 sm:p-4">
+              <div class="flex items-center gap-2 mb-2">
+                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-green-400 font-medium text-sm sm:text-base">Real Order Setup</span>
+              </div>
+              <div class="space-y-2">
+                <div class="flex gap-2">
+                  <button
+                    (click)="setupRealOrderPlacement()"
+                    [disabled]="loading || !orderMarketId"
+                    class="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 disabled:opacity-50 px-3 sm:px-4 py-2 sm:py-3 rounded-lg font-semibold text-white transition-all duration-200 transform hover:scale-105 disabled:transform-none text-xs sm:text-sm">
+                    {{ loading ? 'Setting up...' : 'Setup Real Order Placement' }}
+                  </button>
+                  <button
+                    (click)="placeRealOrder()"
+                    [disabled]="loading || !openOrdersAccount || !orderPrice || !orderSize"
+                    class="bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 disabled:opacity-50 px-3 sm:px-4 py-2 sm:py-3 rounded-lg font-semibold text-white transition-all duration-200 transform hover:scale-105 disabled:transform-none text-xs sm:text-sm">
+                    {{ loading ? 'Placing...' : 'Place Real Order' }}
+                  </button>
+                </div>
+                <div *ngIf="openOrdersAccount" class="text-xs text-green-400">
+                  ✅ Real order placement ready
+                </div>
+                <div *ngIf="!openOrdersAccount" class="text-xs text-yellow-400">
+                  ⚠️ Setup required for real orders
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              <div>
+                <label class="block text-xs sm:text-sm font-medium text-gray-300 mb-2">Order Side</label>
+                <select 
+                  [(ngModel)]="orderSide" 
+                  class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm">
+                  <option value="buy" class="bg-gray-800">Buy</option>
+                  <option value="sell" class="bg-gray-800">Sell</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs sm:text-sm font-medium text-gray-300 mb-2">Order Type</label>
+                <select 
+                  [(ngModel)]="orderType" 
+                  class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm">
+                  <option value="Limit" class="bg-gray-800">Limit</option>
+                  <option value="Market" class="bg-gray-800">Market</option>
+                  <option value="PostOnly" class="bg-gray-800">Post Only</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              <div>
+                <label class="block text-xs sm:text-sm font-medium text-gray-300 mb-2">Price</label>
+                <input 
+                  type="number" 
+                  [(ngModel)]="orderPrice" 
+                  step="0.000001"
+                  class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                  placeholder="0.00" />
+              </div>
+              <div>
+                <label class="block text-xs sm:text-sm font-medium text-gray-300 mb-2">Size</label>
+                <input 
+                  type="number" 
+                  [(ngModel)]="orderSize" 
+                  step="0.000001"
+                  class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                  placeholder="0.00" />
+              </div>
+            </div>
+
+            <div class="flex justify-center">
+              <button 
+                (click)="placeOrder()"
+                [disabled]="loading || !orderMarketId || !orderPrice || !orderSize"
+                class="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 disabled:opacity-50 px-6 sm:px-8 py-2 sm:py-3 rounded-lg font-semibold text-white transition-all duration-200 transform hover:scale-105 disabled:transform-none text-sm sm:text-base">
+                {{ loading ? 'Placing Order...' : 'Place Order' }}
+              </button>
+            </div>
+
+            <!-- Order Result -->
+            <div *ngIf="orderTxId" class="bg-green-900/20 border border-green-500/30 rounded-lg p-3 sm:p-4">
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-green-400 font-medium text-sm sm:text-base">Order Placed Successfully!</span>
+              </div>
+              <div class="mt-2 text-xs sm:text-sm text-gray-300 break-all">TX: {{ orderTxId }}</div>
+            </div>
+
+            <div *ngIf="orderError" class="bg-red-900/20 border border-red-500/30 rounded-lg p-3 sm:p-4">
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-red-400 font-medium text-sm sm:text-base">Order Failed</span>
+              </div>
+              <div class="mt-2 text-xs sm:text-sm text-gray-300">{{ orderError }}</div>
+            </div>
+          </div>
+
+          <!-- Order Summary -->
+          <div class="bg-gray-800/50 rounded-lg p-4 sm:p-6">
+            <h4 class="text-sm sm:text-base font-semibold text-gray-300 mb-3">Order Summary</h4>
+            <div class="space-y-2 text-xs sm:text-sm">
+              <div class="flex justify-between">
+                <span class="text-gray-400">Side:</span>
+                <span class="text-white font-medium" [class.text-green-400]="orderSide === 'buy'" [class.text-red-400]="orderSide === 'sell'">
+                  {{ orderSide?.toUpperCase() }}
+                </span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-400">Type:</span>
+                <span class="text-white font-medium">{{ orderType }}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-400">Price:</span>
+                <span class="text-white font-medium">{{ orderPrice || '0.00' }}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-400">Size:</span>
+                <span class="text-white font-medium">{{ orderSize || '0.00' }}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-400">Total Value:</span>
+                <span class="text-white font-medium">{{ (orderPrice || 0) * (orderSize || 0) | number:'1.6-6' }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Account Status -->
+          <div *ngIf="openOrdersAccount || baseTokenAccount || quoteTokenAccount" class="bg-gray-800/50 rounded-lg p-4 sm:p-6">
+            <h4 class="text-sm sm:text-base font-semibold text-gray-300 mb-3">Account Status</h4>
+            <div class="space-y-2 text-xs sm:text-sm">
+              <div *ngIf="openOrdersAccount" class="flex justify-between">
+                <span class="text-gray-400">OpenOrders:</span>
+                <span class="text-green-400 font-mono break-all">{{ openOrdersAccount | slice:0:8 }}...{{ openOrdersAccount | slice:-8 }}</span>
+              </div>
+              <div *ngIf="baseTokenAccount" class="flex justify-between">
+                <span class="text-gray-400">Base Token:</span>
+                <span class="text-blue-400 font-mono break-all">{{ baseTokenAccount | slice:0:8 }}...{{ baseTokenAccount | slice:-8 }}</span>
+              </div>
+              <div *ngIf="quoteTokenAccount" class="flex justify-between">
+                <span class="text-gray-400">Quote Token:</span>
+                <span class="text-purple-400 font-mono break-all">{{ quoteTokenAccount | slice:0:8 }}...{{ quoteTokenAccount | slice:-8 }}</span>
+              </div>
+              <div *ngIf="marketInfo" class="flex justify-between">
+                <span class="text-gray-400">Market:</span>
+                <span class="text-yellow-400 font-mono break-all">{{ marketInfo.address | slice:0:8 }}...{{ marketInfo.address | slice:-8 }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Token Account Management Section -->
+    <div class="max-w-4xl mx-auto mb-6 sm:mb-8" *ngIf="publicKey$ | async">
+      <div class="bg-gray-900/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 border border-gray-800">
+        <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold mb-4 sm:mb-6 text-center">Token Account Management</h3>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+          <!-- Token Account Operations -->
+          <div class="space-y-4 sm:space-y-6">
+            <div>
+              <label class="block text-xs sm:text-sm font-medium text-gray-300 mb-2">Token Mint Address</label>
+              <input 
+                type="text" 
+                [(ngModel)]="selectedTokenMint" 
+                class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                placeholder="Enter token mint address" />
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <button
+                (click)="getTokenAccounts()"
+                [disabled]="loading"
+                class="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 disabled:opacity-50 px-3 sm:px-4 py-2 sm:py-3 rounded-lg font-semibold text-white transition-all duration-200 transform hover:scale-105 disabled:transform-none text-xs sm:text-sm">
+                {{ loading ? 'Loading...' : 'Get Token Accounts' }}
+              </button>
+              <button
+                (click)="createAssociatedTokenAccount()"
+                [disabled]="loading || !selectedTokenMint"
+                class="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 disabled:opacity-50 px-3 sm:px-4 py-2 sm:py-3 rounded-lg font-semibold text-white transition-all duration-200 transform hover:scale-105 disabled:transform-none text-xs sm:text-sm">
+                {{ loading ? 'Creating...' : 'Create Token Account' }}
+              </button>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <button
+                (click)="getTokenBalance()"
+                [disabled]="loading || !selectedTokenMint"
+                class="bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 disabled:opacity-50 px-3 sm:px-4 py-2 sm:py-3 rounded-lg font-semibold text-white transition-all duration-200 transform hover:scale-105 disabled:transform-none text-xs sm:text-sm">
+                {{ loading ? 'Loading...' : 'Get Token Balance' }}
+              </button>
+              <button
+                (click)="getFeeTier()"
+                [disabled]="loading"
+                class="bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 disabled:opacity-50 px-3 sm:px-4 py-2 sm:py-3 rounded-lg font-semibold text-white transition-all duration-200 transform hover:scale-105 disabled:transform-none text-xs sm:text-sm">
+                {{ loading ? 'Loading...' : 'Get Fee Tier' }}
+              </button>
+            </div>
+
+            <!-- Token Account Results -->
+            <div *ngIf="tokenAccountAddress" class="bg-green-900/20 border border-green-500/30 rounded-lg p-3 sm:p-4">
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-green-400 font-medium text-sm sm:text-base">Token Account Created!</span>
+              </div>
+              <div class="mt-2 text-xs sm:text-sm text-gray-300 break-all">{{ tokenAccountAddress }}</div>
+            </div>
+
+            <div *ngIf="tokenBalance !== null" class="bg-blue-900/20 border border-blue-500/30 rounded-lg p-3 sm:p-4">
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/>
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-blue-400 font-medium text-sm sm:text-base">Token Balance</span>
+              </div>
+              <div class="mt-2 text-xs sm:text-sm text-gray-300">{{ tokenBalance }} tokens</div>
+            </div>
+
+            <div *ngIf="feeTier" class="bg-purple-900/20 border border-purple-500/30 rounded-lg p-3 sm:p-4">
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"/>
+                </svg>
+                <span class="text-purple-400 font-medium text-sm sm:text-base">Fee Tier: {{ feeTier.tier }}</span>
+              </div>
+              <div class="mt-2 text-xs sm:text-sm text-gray-300">
+                Maker: {{ feeTier.maker }}bps | Taker: {{ feeTier.taker }}bps | Platform: {{ feeTier.platform }}bps
+              </div>
+            </div>
+          </div>
+
+          <!-- Token Accounts List -->
+          <div class="bg-gray-800/50 rounded-lg p-4 sm:p-6">
+            <h4 class="text-sm sm:text-base font-semibold text-gray-300 mb-3">Token Accounts</h4>
+            <div *ngIf="tokenAccounts.length === 0" class="text-gray-500 text-center py-4 text-xs sm:text-sm">
+              No token accounts found. Create one to get started.
+            </div>
+            <div *ngIf="tokenAccounts.length > 0" class="space-y-2 max-h-48 overflow-y-auto">
+              <div *ngFor="let account of tokenAccounts" class="bg-gray-700/50 rounded p-2 text-xs">
+                <div class="flex justify-between items-center">
+                  <span class="text-gray-300 font-mono break-all">{{ account.mint | slice:0:8 }}...{{ account.mint | slice:-8 }}</span>
+                  <span class="text-white font-medium">{{ account.balance }}</span>
+                </div>
+                <div class="text-gray-400 text-xs mt-1 break-all">{{ account.address }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Transaction History Section -->
+    <div class="max-w-4xl mx-auto mb-6 sm:mb-8" *ngIf="publicKey$ | async">
+      <div class="bg-gray-900/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 border border-gray-800">
+        <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold mb-4 sm:mb-6 text-center">Transaction History</h3>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+          <!-- Transaction History -->
+          <div class="space-y-4 sm:space-y-6">
+            <div class="flex justify-between items-center">
+              <h4 class="text-sm sm:text-base font-semibold text-gray-300">Recent Transactions</h4>
+              <button
+                (click)="getTransactionHistory()"
+                [disabled]="loading"
+                class="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 disabled:opacity-50 px-3 sm:px-4 py-2 sm:py-3 rounded-lg font-semibold text-white transition-all duration-200 transform hover:scale-105 disabled:transform-none text-xs sm:text-sm">
+                {{ loading ? 'Loading...' : 'Refresh' }}
+              </button>
+            </div>
+
+            <div class="bg-gray-800/50 rounded-lg p-3 sm:p-4 max-h-64 overflow-y-auto">
+              <div *ngIf="transactionHistory.length === 0" class="text-gray-500 text-center py-4 text-xs sm:text-sm">
+                No transactions found. Connect wallet and perform actions to see history.
+              </div>
+              <div *ngFor="let tx of transactionHistory.slice(0, 10)" class="bg-gray-700/50 rounded p-2 mb-2 text-xs cursor-pointer hover:bg-gray-600/50 transition-colors" (click)="getTransactionDetails(tx.signature)">
+                <div class="flex justify-between items-center">
+                  <span class="text-gray-300 font-mono break-all">{{ tx.signature | slice:0:8 }}...{{ tx.signature | slice:-8 }}</span>
+                  <span class="text-white font-medium" [class.text-green-400]="tx.status === 'Confirmed'" [class.text-yellow-400]="tx.status === 'Pending'" [class.text-red-400]="tx.status === 'Failed'">
+                    {{ tx.status }}
+                  </span>
+                </div>
+                <div class="text-gray-400 text-xs mt-1">{{ tx.timestamp | date:'short' }}</div>
+              </div>
+            </div>
+
+            <!-- Transaction Details -->
+            <div *ngIf="selectedTransaction" class="bg-blue-900/20 border border-blue-500/30 rounded-lg p-3 sm:p-4">
+              <div class="flex items-center gap-2 mb-2">
+                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-blue-400 font-medium text-sm sm:text-base">Transaction Details</span>
+              </div>
+              <div class="space-y-1 text-xs sm:text-sm">
+                <div class="flex justify-between">
+                  <span class="text-gray-400">Status:</span>
+                  <span class="text-white" [class.text-green-400]="selectedTransaction.status === 'Confirmed'" [class.text-red-400]="selectedTransaction.status === 'Failed'">
+                    {{ selectedTransaction.status }}
+                  </span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-400">Fee:</span>
+                  <span class="text-white">{{ selectedTransaction.fee }} lamports</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-400">Slot:</span>
+                  <span class="text-white">{{ selectedTransaction.slot }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-400">Instructions:</span>
+                  <span class="text-white">{{ selectedTransaction.instructions }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Order History -->
+          <div class="space-y-4 sm:space-y-6">
+            <h4 class="text-sm sm:text-base font-semibold text-gray-300">Order History</h4>
+            
+            <div class="bg-gray-800/50 rounded-lg p-3 sm:p-4 max-h-64 overflow-y-auto">
+              <div *ngIf="orderHistory.length === 0" class="text-gray-500 text-center py-4 text-xs sm:text-sm">
+                No orders placed yet. Place orders to see history here.
+              </div>
+              <div *ngFor="let order of orderHistory.slice(0, 10)" class="bg-gray-700/50 rounded p-2 mb-2 text-xs">
+                <div class="flex justify-between items-center">
+                  <span class="text-white font-medium" [class.text-green-400]="order.side === 'buy'" [class.text-red-400]="order.side === 'sell'">
+                    {{ order.side?.toUpperCase() }}
+                  </span>
+                  <span class="text-gray-300">{{ order.size }} at {{ order.price }}</span>
+                </div>
+                <div class="flex justify-between items-center mt-1">
+                  <span class="text-gray-400">{{ order.type }}</span>
+                  <span class="text-white font-medium" [class.text-green-400]="order.status === 'Placed'" [class.text-yellow-400]="order.status === 'Pending'">
+                    {{ order.status }}
+                  </span>
+                </div>
+                <div class="text-gray-400 text-xs mt-1">{{ order.timestamp | date:'short' }}</div>
+                <div *ngIf="order.txId" class="text-gray-400 text-xs mt-1 break-all">
+                  TX: {{ order.txId | slice:0:8 }}...{{ order.txId | slice:-8 }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Network Status Section -->
+    <div class="max-w-4xl mx-auto mb-6 sm:mb-8" *ngIf="publicKey$ | async">
+      <div class="bg-gray-900/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 border border-gray-800">
+        <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold mb-4 sm:mb-6 text-center">Network Status</h3>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+          <!-- Network Status -->
+          <div class="space-y-4 sm:space-y-6">
+            <div class="flex justify-between items-center">
+              <h4 class="text-sm sm:text-base font-semibold text-gray-300">Connection Status</h4>
+              <button
+                (click)="checkNetworkStatus()"
+                [disabled]="loading"
+                class="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 disabled:opacity-50 px-3 sm:px-4 py-2 sm:py-3 rounded-lg font-semibold text-white transition-all duration-200 transform hover:scale-105 disabled:transform-none text-xs sm:text-sm">
+                {{ loading ? 'Checking...' : 'Check Status' }}
+              </button>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              <div class="bg-gray-800/50 rounded-lg p-3 sm:p-4">
+                <div class="text-xs sm:text-sm text-gray-400 mb-1">Network Status</div>
+                <div class="text-sm sm:text-base font-semibold" [class.text-green-400]="networkStatus === 'Connected'" [class.text-red-400]="networkStatus === 'Disconnected'" [class.text-yellow-400]="networkStatus === 'Unknown'">
+                  {{ networkStatus }}
+                </div>
+              </div>
+              <div class="bg-gray-800/50 rounded-lg p-3 sm:p-4">
+                <div class="text-xs sm:text-sm text-gray-400 mb-1">Connection Health</div>
+                <div class="text-sm sm:text-base font-semibold" [class.text-green-400]="connectionHealth" [class.text-red-400]="!connectionHealth">
+                  {{ connectionHealth ? 'Good' : 'Poor' }}
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="lastBlockTime" class="bg-blue-900/20 border border-blue-500/30 rounded-lg p-3 sm:p-4">
+              <div class="flex items-center gap-2 mb-2">
+                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-blue-400 font-medium text-sm sm:text-base">Last Block Time</span>
+              </div>
+              <div class="text-xs sm:text-sm text-gray-300">{{ lastBlockTime | date:'medium' }}</div>
+            </div>
+          </div>
+
+          <!-- Connection Health -->
+          <div class="space-y-4 sm:space-y-6">
+            <div class="flex justify-between items-center">
+              <h4 class="text-sm sm:text-base font-semibold text-gray-300">Connection Health</h4>
+              <button
+                (click)="getConnectionHealth()"
+                [disabled]="loading"
+                class="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 disabled:opacity-50 px-3 sm:px-4 py-2 sm:py-3 rounded-lg font-semibold text-white transition-all duration-200 transform hover:scale-105 disabled:transform-none text-xs sm:text-sm">
+                {{ loading ? 'Checking...' : 'Check Health' }}
+              </button>
+            </div>
+
+            <div class="bg-gray-800/50 rounded-lg p-4 sm:p-6">
+              <div class="space-y-3">
+                <div class="flex items-center gap-2">
+                  <div class="w-3 h-3 rounded-full" [class.bg-green-400]="connectionHealth" [class.bg-red-400]="!connectionHealth" [class.animate-pulse]="connectionHealth"></div>
+                  <span class="text-sm sm:text-base font-medium" [class.text-green-400]="connectionHealth" [class.text-red-400]="!connectionHealth">
+                    {{ connectionHealth ? 'Connected' : 'Disconnected' }}
+                  </span>
+                </div>
+                <div class="text-xs sm:text-sm text-gray-400">
+                  Network: Solana Testnet
+                </div>
+                <div class="text-xs sm:text-sm text-gray-400">
+                  Endpoint: api.testnet.solana.com
+                </div>
+              </div>
+            </div>
+
+            <!-- Network Info -->
+            <div class="bg-gray-800/50 rounded-lg p-4 sm:p-6">
+              <h5 class="text-xs sm:text-sm font-semibold text-gray-300 mb-3">Network Information</h5>
+              <div class="space-y-2 text-xs sm:text-sm">
+                <div class="flex justify-between">
+                  <span class="text-gray-400">Network:</span>
+                  <span class="text-white">Solana Testnet</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-400">Program ID:</span>
+                  <span class="text-white font-mono">6jRJKV5ya8uvLk8WXYMcJDtx7bTUCXLuScYscenUsUeH</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-400">Status:</span>
+                  <span class="text-white" [class.text-green-400]="networkStatus === 'Connected'" [class.text-red-400]="networkStatus === 'Disconnected'">
+                    {{ networkStatus }}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

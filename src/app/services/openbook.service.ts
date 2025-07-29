@@ -605,25 +605,133 @@ export class OpenbookService {
     decimals: number = 9,
     authority?: PublicKey
   ): Observable<{ mint: PublicKey, signature: string }> {
-    return new Observable(observer => {
-      const mintAuthority = authority || this.walletService.getPublicKey();
-      if (!mintAuthority) {
-        observer.error(new Error('Wallet not connected'));
-        return;
+    return from(this.createTokenMintInternal(decimals, authority));
+  }
+
+  /**
+   * Internal method to create SPL token mint
+   * @param decimals Number of decimal places
+   * @param authority Public key of the mint authority (defaults to wallet)
+   * @returns Promise of the created mint public key and signature
+   */
+  private async createTokenMintInternal(decimals: number, authority?: PublicKey): Promise<{ mint: PublicKey, signature: string }> {
+    try {
+      if (!this.isInitialized()) {
+        throw new Error('Openbook program not initialized');
       }
 
-      // Simulate token minting for compatibility
-      setTimeout(() => {
-        // Use a valid base58 string for the simulated mint
-        const simulatedMint = new PublicKey('11111111111111111111111111111111');
-        const simulatedSignature = 'simulated_mint_signature_' + Date.now();
-        
-        observer.next({ 
-          mint: simulatedMint, 
-          signature: simulatedSignature 
+      const mintAuthority = authority || this.walletService.getPublicKey();
+      if (!mintAuthority) {
+        throw new Error('Wallet not connected');
+      }
+
+      // For now, simulate token minting due to SPL token library complexity
+      // In a real implementation, you would use the SPL Token program
+      console.log('Simulating token mint creation for testnet...');
+      
+      // Generate a simulated mint address
+      const simulatedMint = Keypair.generate().publicKey;
+      const simulatedSignature = 'simulated_mint_' + Date.now();
+      
+      // Simulate the creation process
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      console.log('Token mint simulated successfully:', simulatedMint.toBase58());
+      
+      // Validate the result before returning
+      if (!simulatedMint || !simulatedSignature) {
+        throw new Error('Failed to generate simulated mint data');
+      }
+      
+      return { 
+        mint: simulatedMint, 
+        signature: simulatedSignature 
+      };
+      
+    } catch (error: any) {
+      console.error('Failed to create token mint:', error);
+      throw new Error(`Token mint creation failed: ${error.message}`);
+    }
+  }
+
+  /**
+   * Create an OpenOrders account for a specific market
+   * @param market Public key of the market
+   * @returns Observable of the created OpenOrders account public key
+   */
+  createOpenOrdersAccount(market: PublicKey): Observable<PublicKey> {
+    return new Observable(observer => {
+      this.createOpenOrdersAccountInternal(market)
+        .then(account => {
+          observer.next(account);
+          observer.complete();
+        })
+        .catch(error => {
+          observer.error(error);
         });
-        observer.complete();
-      }, 2000);
     });
+  }
+
+  /**
+   * Internal method to create OpenOrders account
+   * @param market Public key of the market
+   * @returns Promise of the created OpenOrders account public key
+   */
+  private async createOpenOrdersAccountInternal(market: PublicKey): Promise<PublicKey> {
+    try {
+      if (!this.isInitialized()) {
+        throw new Error('Openbook program not initialized');
+      }
+
+      const wallet = this.walletService.getPublicKey();
+      if (!wallet) {
+        throw new Error('Wallet not connected');
+      }
+
+      // Generate a new keypair for the OpenOrders account
+      const openOrdersKeypair = Keypair.generate();
+      
+      // Calculate rent exemption for OpenOrders account
+      const rentExemption = await this.getMinimumRentExemption(ORDERBOOK_SIZE);
+      
+      // Create the OpenOrders account
+      const transaction = new Transaction().add(
+        SystemProgram.createAccount({
+          fromPubkey: wallet,
+          newAccountPubkey: openOrdersKeypair.publicKey,
+          lamports: rentExemption,
+          space: ORDERBOOK_SIZE,
+          programId: this.program.programId
+        })
+      );
+
+      // Add instruction to initialize OpenOrders account
+      // This would be the actual OpenBook instruction in a real implementation
+      const initInstruction = new TransactionInstruction({
+        keys: [
+          { pubkey: openOrdersKeypair.publicKey, isSigner: true, isWritable: true },
+          { pubkey: market, isSigner: false, isWritable: false },
+          { pubkey: wallet, isSigner: true, isWritable: true },
+          { pubkey: SYSVAR_RENT_PUBKEY, isSigner: false, isWritable: false },
+        ],
+        programId: this.program.programId,
+        data: Buffer.alloc(0) // In real implementation, this would contain the instruction data
+      });
+      
+      transaction.add(initInstruction);
+      transaction.feePayer = wallet;
+      transaction.recentBlockhash = (await this.connection.getLatestBlockhash()).blockhash;
+      
+      // Sign and send transaction
+      transaction.sign(openOrdersKeypair);
+      const signature = await this.connection.sendTransaction(transaction, [openOrdersKeypair]);
+      
+      console.log('OpenOrders account created:', signature);
+      return openOrdersKeypair.publicKey;
+      
+    } catch (error: any) {
+      console.error('Failed to create OpenOrders account:', error);
+      throw error;
+    }
   }
 } 

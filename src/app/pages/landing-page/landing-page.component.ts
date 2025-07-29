@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./landing-page.component.css']
 })
 export class LandingPageComponent {
+  redirectToPdf() {
+    window.open('assets/OPX_OAT WHITEPAPPER.pdf', '_blank');
+  }
 
 }
