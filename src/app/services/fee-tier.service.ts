@@ -14,8 +14,8 @@ export interface FeeTier {
 export class FeeTierService {
   constructor(private openbook: OpenbookService) {}
 
-  getFeeTier(opxMint: PublicKey): Observable<FeeTier> {
-    return this.openbook.getOpxBalance(opxMint).pipe(
+  getFeeTier(odxMint: PublicKey): Observable<FeeTier> {
+    return this.openbook.getOdxBalance(odxMint).pipe(
       map(balance => {
         let tier = 0, maker = 15, taker = 20;
         if (balance >= 1000) { tier = 2; maker = 10; taker = 10; }

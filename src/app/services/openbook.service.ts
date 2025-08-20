@@ -592,10 +592,10 @@ export class OpenbookService {
   }
 
   /**
-   * Get the user's OPX token balance
+   * Get the user's ODX token balance
    */
-  getOpxBalance(opxMint: PublicKey): Observable<number> {
-    return from(this.walletService.getSplTokenBalance(opxMint.toBase58()));
+  getOdxBalance(odxMint: PublicKey): Observable<number> {
+    return from(this.walletService.getSplTokenBalance(odxMint.toBase58()));
   }
 
   /**

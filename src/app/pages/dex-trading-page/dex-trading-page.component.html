@@ -35,7 +35,7 @@
               <div class="flex-1 flex flex-col w-full sm:w-auto">
                 <div class="flex items-center bg-[#172736] rounded-full border border-[#2e4e6b] px-3 py-2 mb-2">
                   <select class="appearance-none bg-transparent text-white font-bold text-sm sm:text-base pr-6 focus:outline-none flex-1">
-                    <option value="opx">🔵 OPX</option>
+                    <option value="odx">🔵 ODX</option>
                     <option value="sol">🟡 SOL</option>
                     <option value="usdc">🟢 USDC</option>
                   </select>
@@ -57,7 +57,7 @@
                 <div class="flex items-center bg-[#172736] rounded-full border border-[#2e4e6b] px-3 py-2 mb-2">
                   <select class="appearance-none bg-transparent text-white font-bold text-sm sm:text-base pr-6 focus:outline-none flex-1">
                     <option value="sol">🟡 SOL</option>
-                    <option value="opx">🔵 OPX</option>
+                    <option value="odx">🔵 ODX</option>
                     <option value="usdc">🟢 USDC</option>
                   </select>
                   <span class="ml-2 text-[#8daece] text-base sm:text-lg pointer-events-none">▼</span>
@@ -69,7 +69,7 @@
             
             <!-- Real-Time Price Preview -->
             <div class="flex items-center gap-2 px-4 pb-3 pt-1">
-              <span class="inline-flex items-center px-2 sm:px-3 py-1 rounded-full bg-[#172736] text-[#8daece] text-xs font-semibold"><svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l2 2"/></svg> Price: 1 OPX = 0.8 SOL</span>
+              <span class="inline-flex items-center px-2 sm:px-3 py-1 rounded-full bg-[#172736] text-[#8daece] text-xs font-semibold"><svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l2 2"/></svg> Price: 1 ODX = 0.8 SOL</span>
             </div>
             
             <!-- Slippage Tolerance -->
@@ -143,9 +143,9 @@
                 <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg"
                   style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBfcmAP3UjhUKcREbaGsjRT23POOZkJS10buKuH3HMo3FSpkia3hJmSwVD88IieBQZ4hGea_cUTiIt7jjIVvmftEEi0acCZd59-kjCNDi38ejlR3onX29sp1dtNtJUzGwuZkGkKMOsi272d7MhJXIYIK0cJoQGqX5O-vMTMnc5RzXL-Myt56jnWlG4AkEqOOnBiUZxtM_RUQkGtdUJIcgc5uFGwspElwryQGN4oVVtMTIJgZJc349ewIoCjv9QRfo6EOs3cJ9WUxsg");'></div>
                 <div>
-                  <p class="text-white text-sm sm:text-base font-medium leading-normal flex items-center gap-2">OPX/NEH-OAT <span class="text-base sm:text-lg">🔵</span><span class="text-base sm:text-lg">🟢</span></p>
-                  <p class="text-[#8daece] text-xs sm:text-sm font-normal leading-normal">Staked: 500 OPX ($2500)</p>
-                  <p class="text-[#8daece] text-xs sm:text-sm font-normal leading-normal">Earned OPX: 125</p>
+                  <p class="text-white text-sm sm:text-base font-medium leading-normal flex items-center gap-2">ODX/NEH-OAT <span class="text-base sm:text-lg">🔵</span><span class="text-base sm:text-lg">🟢</span></p>
+                  <p class="text-[#8daece] text-xs sm:text-sm font-normal leading-normal">Staked: 500 ODX ($2500)</p>
+                  <p class="text-[#8daece] text-xs sm:text-sm font-normal leading-normal">Earned ODX: 125</p>
                   <div *ngIf="expandedPoolCard === 0" class="mt-2 p-2 bg-[#172736] rounded text-xs text-white animate-fade-in">Pool details coming soon...</div>
                   <button *ngIf="expandedPoolCard !== 0" class="absolute top-2 right-2 bg-[#359dff] text-[#0f1a24] px-2 sm:px-3 py-1 rounded shadow hover:scale-105 transition-all opacity-0 group-hover:opacity-100 text-xs sm:text-sm">View Details</button>
                 </div>
@@ -158,7 +158,7 @@
                 <div>
                   <p class="text-white text-sm sm:text-base font-medium leading-normal flex items-center gap-2">OS-OAT/SOL <span class="text-base sm:text-lg">🟡</span><span class="text-base sm:text-lg">🟢</span></p>
                   <p class="text-[#8daece] text-xs sm:text-sm font-normal leading-normal">Staked: 20 SOL ($1000)</p>
-                  <p class="text-[#8daece] text-xs sm:text-sm font-normal leading-normal">Earned OPX: 75</p>
+                  <p class="text-[#8daece] text-xs sm:text-sm font-normal leading-normal">Earned ODX: 75</p>
                   <div *ngIf="expandedPoolCard === 1" class="mt-2 p-2 bg-[#172736] rounded text-xs text-white animate-fade-in">Pool details coming soon...</div>
                   <button *ngIf="expandedPoolCard !== 1" class="absolute top-2 right-2 bg-[#359dff] text-[#0f1a24] px-2 sm:px-3 py-1 rounded shadow hover:scale-105 transition-all opacity-0 group-hover:opacity-100 text-xs sm:text-sm">View Details</button>
                 </div>

@@ -418,11 +418,11 @@ export class TestnetPageComponent implements OnInit, OnDestroy {
       this.error = null;
       this.addLog('Fetching fee tier information...');
       
-      // Use a default OPX mint address for testnet
-      const opxMint = new PublicKey('EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v'); // Using USDC as placeholder
+          // Use a default ODX mint address for testnet
+    const odxMint = new PublicKey('EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v'); // Using USDC as placeholder
       
       // Get real fee tier data from the service
-      const feeTierData = await this.feeTierService.getFeeTier(opxMint).toPromise();
+              const feeTierData = await this.feeTierService.getFeeTier(odxMint).toPromise();
       
       if (feeTierData) {
         this.feeTier = feeTierData;
