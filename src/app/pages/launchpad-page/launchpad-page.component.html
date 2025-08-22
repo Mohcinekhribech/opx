@@ -10,27 +10,63 @@
             </div>
             
             <!-- Featured Project Card -->
-            <div class="p-4">
-              <div class="flex flex-col items-stretch justify-start rounded-xl lg:flex-row lg:items-start bg-gradient-to-br from-[#172736]/80 via-[#22303a]/60 to-[#121416]/80 shadow-2xl border border-[#22303a] overflow-hidden relative">
-                <div class="relative w-full aspect-video bg-center bg-no-repeat bg-cover rounded-xl overflow-hidden">
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
-                  <div class="absolute left-1/2 top-0 -translate-x-1/2 w-1/2 h-12 sm:h-16 bg-gradient-to-r from-[#699dcd]/30 via-transparent to-[#699dcd]/30 blur-2xl opacity-60 animate-pulse pointer-events-none z-10"></div>
-                  <span class="absolute top-3 sm:top-4 left-3 sm:left-4 z-20 bg-[#699dcd] text-[#121416] text-xs font-bold px-2 sm:px-3 py-1 rounded-full shadow">Upcoming</span>
+            <div class="p-5 sm:p-6 lg:p-8">
+              <div class="flex flex-col items-stretch justify-start rounded-xl lg:flex-row lg:items-start bg-gradient-to-br from-[#172736]/90 via-[#22303a]/70 to-[#121416]/90 shadow-2xl border border-[#22303a] overflow-hidden relative group">
+                <!-- Background Glow Effect -->
+                <div class="absolute inset-0 bg-gradient-to-r from-[#699dcd]/5 via-transparent to-[#699dcd]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                
+                <!-- Image Section -->
+                <div class="relative w-full aspect-video lg:aspect-square lg:w-72 xl:w-80 bg-center bg-no-repeat bg-cover rounded-t-xl lg:rounded-l-xl lg:rounded-t-none overflow-hidden">
+                  <!-- Background Image -->
                   <div class="w-full h-full" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCVj0rvk7KgHHaTtbXILhFA8Nmdc2JEnFW5JGC01cx4ZqH3E7bNBJ-TEKAINUM1VcvOFSZCj48-54gt9_uJRV7f0GnZ2GBxAQ-MAuZ-iIqSGKFVVjgJJAl2DIt6GI_BAAZvmeITvPD5JzPxWjGFMsC2r0JLOdFSvFj0MHk8N-f7Uc-bwqGHJLliT2bGA2ZEXeU5yhh5IXeYbmKzwqU4koGQT4mC0kKQj9Slmim-anllQVhrIf4Vm31TqzAwMji5k_kS7tfJ6Xl2DXc"); background-size: cover; background-position: center;'></div>
+                  
+                  <!-- Gradient Overlay for Better Text Readability -->
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+                  
+                  <!-- Animated Glow Effect -->
+                  <div class="absolute left-1/2 top-0 -translate-x-1/2 w-1/2 h-12 sm:h-16 bg-gradient-to-r from-[#699dcd]/30 via-transparent to-[#699dcd]/30 blur-2xl opacity-60 animate-pulse pointer-events-none"></div>
+                  
+                  <!-- Status Badge -->
+                  <div class="absolute top-3 sm:top-4 left-3 sm:left-4 z-20 flex items-center gap-2">
+                    <div class="w-2 h-2 bg-[#699dcd] rounded-full animate-pulse"></div>
+                    <span class="bg-[#699dcd]/95 backdrop-blur-md text-[#121416] text-xs font-bold px-3 py-1.5 rounded-full shadow-lg border border-[#699dcd]/30">Upcoming</span>
+                  </div>
+                  
+                  <!-- Bottom Gradient for Better Text Contrast -->
+                  <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/40 to-transparent"></div>
                 </div>
-                <div class="flex w-full min-w-0 lg:min-w-72 grow flex-col items-stretch justify-center gap-1 py-4 lg:px-4">
-                  <p class="text-white text-base sm:text-lg font-bold leading-tight tracking-[-0.015em]">New Asset Offering</p>
-                  <div class="flex items-end gap-3 justify-between">
-                    <div class="flex flex-col gap-1 flex-1 min-w-0">
-                      <p class="text-[#a2abb3] text-sm sm:text-base font-normal leading-normal">
-                        Participate in the latest asset offerings on ODX. Get early access to promising projects and maximize your returns.
-                      </p>
-                      <p class="text-[#a2abb3] text-sm sm:text-base font-normal leading-normal">Starts in</p>
+                
+                <!-- Content Section -->
+                <div class="flex w-full min-w-0 lg:min-w-72 grow flex-col items-stretch justify-center gap-4 py-6 px-2 sm:py-8 lg:px-8 relative z-10">
+                  <!-- Header -->
+                  <div class="flex items-start justify-between gap-3 sm:gap-4">
+                    <div class="flex-1 min-w-0">
+                      <h2 class="text-white text-lg sm:text-xl lg:text-2xl font-bold leading-tight tracking-[-0.015em] mb-4">ODX Launchpad</h2>
+                      <p class="text-[#699dcd] text-sm sm:text-base font-medium">Real-World Asset Tokenization</p>
+                    </div>
+                  </div>
+                  
+                  <!-- Description -->
+                  <div class="space-y-4 sm:space-y-4">
+                    <p class="text-[#8daece] text-sm sm:text-base leading-relaxed">
+                      The ODX launchpad by Openmind is designed to pioneer real-world asset tokenization (RWA) in emerging markets, with a compliance-first, transparent, and investor-centric approach.
+                    </p>
+                    <p class="text-[#8daece] text-sm sm:text-base leading-relaxed">
+                      It introduces two distinct tokenization tracks, each creating Revenue Tokens tied to tangible performance and collateralized value.
+                    </p>
+                  </div>
+
+                  
+                  <!-- Action Section -->
+                  <div class="flex items-center justify-between pt-4">
+                    <div class="flex items-center gap-2 text-[#a2abb3] text-sm">
+                      
                     </div>
                     <button
-                      class="flex min-w-[80px] sm:min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-7 sm:h-8 px-3 sm:px-4 bg-[#699dcd] text-[#121416] text-xs sm:text-sm font-medium leading-normal shadow-lg border-2 border-transparent hover:border-[#699dcd] hover:shadow-[0_0_12px_#699dcd] focus:outline-none focus:ring-2 focus:ring-[#699dcd] focus:ring-offset-2 focus:ring-offset-[#121416] transition-all"
+                      (click)="scrollToCollapsibles()"
+                      class="flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-[#699dcd] text-[#121416] text-sm font-semibold rounded-lg shadow-lg border-2 border-transparent hover:bg-[#5a8bb8] hover:border-[#699dcd] hover:shadow-[0_0_12px_#699dcd] focus:outline-none focus:ring-2 focus:ring-[#699dcd] focus:ring-offset-2 focus:ring-offset-[#172736] transition-all duration-200"
                     >
-                      <span class="truncate">View Details</span>
+                      <span>View Details</span>
                     </button>
                   </div>
                 </div>
@@ -207,6 +243,295 @@
                 >
                   <span class="truncate">Commit ODX</span>
                 </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Collapsible Information Sections -->
+        <div id="collapsible-sections" class="px-3 sm:px-6 lg:px-8 xl:px-12 2xl:px-40 py-6 sm:py-8">
+          <div class="max-w-[960px] mx-auto space-y-3 sm:space-y-4">
+            
+            <!-- 1. Startup Tokenization Collapsible -->
+            <div class="bg-[#172736] border border-[#40484f] rounded-lg sm:rounded-xl overflow-hidden">
+              <button 
+                (click)="toggleCollapsible(1)"
+                class="w-full flex items-center justify-between p-3 sm:p-4 lg:p-6 text-left hover:bg-[#22303a] active:bg-[#1a232a] transition-colors touch-manipulation"
+              >
+                <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+                  <span class="text-[#699dcd] text-lg sm:text-xl flex-shrink-0">🚀</span>
+                  <h3 class="text-sm sm:text-base lg:text-lg font-semibold text-white leading-tight">1. Startup Tokenization via Openmind Startup Studio (OS-OAT)</h3>
+                </div>
+                <svg 
+                  class="w-4 h-4 sm:w-5 sm:h-5 text-[#699dcd] transition-transform duration-200 flex-shrink-0 ml-2"
+                  [class.rotate-180]="openCollapsibles[1]"
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              
+              <div 
+                class="border-t border-[#40484f] transition-all duration-300 overflow-hidden"
+                [class.max-h-0]="!openCollapsibles[1]"
+                [class.max-h-[900px]]="openCollapsibles[1]"
+              >
+                <div class="p-3 sm:p-4 lg:p-6 space-y-3 sm:space-y-4">
+                  <div>
+                    <h5 class="text-[#699dcd] font-semibold text-sm sm:text-base mb-2">🔹 Purpose</h5>
+                    <p class="text-[#8daece] text-xs sm:text-sm lg:text-base leading-relaxed">
+                      Enable investors to participate in early-stage startup growth through tokenized equity instruments, while ensuring risk mitigation and transparent management.
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <h5 class="text-[#699dcd] font-semibold text-sm sm:text-base mb-2">🔹 Structure</h5>
+                    <ul class="text-[#8daece] text-xs sm:text-sm lg:text-base space-y-1.5 sm:space-y-2 ml-3 sm:ml-4">
+                      <li><strong class="text-white">OS-OAT Tokens:</strong> Equity-backed tokens, pegged to startup valuations.</li>
+                      <li><strong class="text-white">Yield Model:</strong> DAO-governed yield distribution, expected around 15% annually.</li>
+                      <li><strong class="text-white">Minting & Burning:</strong> Controlled by valuation oracles; new tokens minted only after verified valuation increases.</li>
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <h5 class="text-[#699dcd] font-semibold text-sm sm:text-base mb-2">🔹 Investor Safeguards</h5>
+                    <ul class="text-[#8daece] text-xs sm:text-sm lg:text-base space-y-1.5 sm:space-y-2 ml-3 sm:ml-4">
+                      <li><strong class="text-white">Managed by Startup Studio:</strong> All startups funded through ODX are incubated and financially managed within Openmind's Startup Studio.</li>
+                      <li><strong class="text-white">Operational & Financial Oversight:</strong> Studio provides centralized support functions (HR, finance, legal, tech support), ensuring startups remain transparent and investors can track progress.</li>
+                      <li><strong class="text-white">DAO Oversight:</strong> Token holders vote on yield allocation, treasury usage, and performance reviews.</li>
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <h5 class="text-[#699dcd] font-semibold text-sm sm:text-base mb-2">🔹 Benefits</h5>
+                    <ul class="text-[#8daece] text-xs sm:text-sm lg:text-base space-y-1.5 sm:space-y-2 ml-3 sm:ml-4">
+                      <li><strong class="text-white">Liquidity:</strong> Startup equity becomes tradable via token markets.</li>
+                      <li><strong class="text-white">Clarity:</strong> Investors see clear performance dashboards and valuation updates.</li>
+                      <li><strong class="text-white">Capital Efficiency:</strong> Startups access funding without opaque VC terms, while investors retain direct fractional ownership.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. NEH Real Estate Tokenization Collapsible -->
+            <div class="bg-[#172736] border border-[#40484f] rounded-lg sm:rounded-xl overflow-hidden">
+              <button 
+                (click)="toggleCollapsible(2)"
+                class="w-full flex items-center justify-between p-3 sm:p-4 lg:p-6 text-left hover:bg-[#22303a] active:bg-[#1a232a] transition-colors touch-manipulation"
+              >
+                <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+                  <span class="text-[#699dcd] text-lg sm:text-xl flex-shrink-0">🏠</span>
+                  <h3 class="text-sm sm:text-base lg:text-lg font-semibold text-white leading-tight">2. NEH Real Estate Tokenization (NEH-OAT)</h3>
+                </div>
+                <svg 
+                  class="w-4 h-4 sm:w-5 sm:h-5 text-[#699dcd] transition-transform duration-200 flex-shrink-0 ml-2"
+                  [class.rotate-180]="openCollapsibles[2]"
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              
+              <div 
+                class="border-t border-[#40484f] transition-all duration-300 overflow-hidden"
+                [class.max-h-0]="!openCollapsibles[2]"
+                [class.max-h-[900px]]="openCollapsibles[2]"
+              >
+                <div class="p-3 sm:p-4 lg:p-6 space-y-3 sm:space-y-4">
+                  <div>
+                    <h5 class="text-[#699dcd] font-semibold text-sm sm:text-base mb-2">🔹 Purpose</h5>
+                    <p class="text-[#8daece] text-xs sm:text-sm lg:text-base leading-relaxed">
+                      Open up luxury real estate investments (focused on Moroccan Ryads and other high-value assets) to a broader investor base through vault-backed tokenization.
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <h5 class="text-[#699dcd] font-semibold text-sm sm:text-base mb-2">🔹 Structure</h5>
+                    <ul class="text-[#8daece] text-xs sm:text-sm lg:text-base space-y-1.5 sm:space-y-2 ml-3 sm:ml-4">
+                      <li><strong class="text-white">NEH-OAT Tokens:</strong> Backed by ≥120% collateralized physical assets.</li>
+                      <li><strong class="text-white">Yield Model:</strong> Provides ~6% net yield, distributed quarterly.</li>
+                      <li><strong class="text-white">Vault of Assets:</strong> Each real estate property (e.g., luxury ryads) is tokenized into an asset vault, giving investors clear visibility into each step of development or rental operation.</li>
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <h5 class="text-[#699dcd] font-semibold text-sm sm:text-base mb-2">🔹 Investor Safeguards</h5>
+                    <ul class="text-[#8daece] text-xs sm:text-sm lg:text-base space-y-1.5 sm:space-y-2 ml-3 sm:ml-4">
+                      <li><strong class="text-white">Milestone-Based Fund Release:</strong> Capital is disbursed in stages, only when development or renovation milestones are achieved.</li>
+                      <li><strong class="text-white">Oracle-Driven Compliance:</strong> Oracles monitor asset valuation, collateral coverage ratio (CCR ≥120%), and project delivery stages.</li>
+                      <li><strong class="text-white">Transparency Dashboards:</strong> Investors access real-time project updates: purchase, renovation, rental performance, yield flows.</li>
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <h5 class="text-[#699dcd] font-semibold text-sm sm:text-base mb-2">🔹 Benefits</h5>
+                    <ul class="text-[#8daece] text-xs sm:text-sm lg:text-base space-y-1.5 sm:space-y-2 ml-3 sm:ml-4">
+                      <li><strong class="text-white">Security:</strong> Strong collateral ratios and regulated token issuance.</li>
+                      <li><strong class="text-white">Transparency:</strong> Real-time tracking of capital allocation and asset progress.</li>
+                      <li><strong class="text-white">Accessibility:</strong> Fractional ownership democratizes access to luxury real estate markets.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. Governance & Risk Mitigation Collapsible -->
+            <div class="bg-[#172736] border border-[#40484f] rounded-lg sm:rounded-xl overflow-hidden">
+              <button 
+                (click)="toggleCollapsible(3)"
+                class="w-full flex items-center justify-between p-3 sm:p-4 lg:p-6 text-left hover:bg-[#22303a] active:bg-[#1a232a] transition-colors touch-manipulation"
+              >
+                <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+                  <span class="text-[#699dcd] text-lg sm:text-xl flex-shrink-0">🛡️</span>
+                  <h3 class="text-sm sm:text-base lg:text-lg font-semibold text-white leading-tight">3. Governance & Risk Mitigation Framework</h3>
+                </div>
+                <svg 
+                  class="w-4 h-4 sm:w-5 sm:h-5 text-[#699dcd] transition-transform duration-200 flex-shrink-0 ml-2"
+                  [class.rotate-180]="openCollapsibles[3]"
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              
+              <div 
+                class="border-t border-[#40484f] transition-all duration-300 overflow-hidden"
+                [class.max-h-0]="!openCollapsibles[3]"
+                [class.max-h-[700px]]="openCollapsibles[3]"
+              >
+                <div class="p-3 sm:p-4 lg:p-6 space-y-3 sm:space-y-4">
+                  <p class="text-[#8daece] text-xs sm:text-sm lg:text-base leading-relaxed">
+                    Both tokenization tracks share a common governance architecture under the ODX ecosystem:
+                  </p>
+                  
+                  <ul class="text-[#8daece] text-xs sm:text-sm lg:text-base space-y-1.5 sm:space-y-2 ml-3 sm:ml-4">
+                    <li>≥120% Collateral Coverage Ratio with automatic oracle checks.</li>
+                    <li><strong class="text-white">Validator Protocol:</strong> Validators stake ODX, penalized if reporting deviates >5%.</li>
+                    <li><strong class="text-white">DAO Transparency:</strong> All treasury and yield changes voted on-chain.</li>
+                  </ul>
+                  
+                  <div>
+                    <h5 class="text-[#699dcd] font-semibold text-sm sm:text-base mb-2">Regulatory Compliance:</h5>
+                    <ul class="text-[#8daece] text-xs sm:text-sm lg:text-base space-y-1.5 sm:space-y-2 ml-3 sm:ml-4">
+                      <li>OS-OAT treated as securities with KYC & vesting restrictions.</li>
+                      <li>NEH-OAT structured as asset-backed tokens with compliance checks.</li>
+                      <li>ODX remains a utility token, granting governance, staking, and launchpad access.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. Value Flow for Investors Collapsible -->
+            <div class="bg-[#172736] border border-[#40484f] rounded-lg sm:rounded-xl overflow-hidden">
+              <button 
+                (click)="toggleCollapsible(4)"
+                class="w-full flex items-center justify-between p-3 sm:p-4 lg:p-6 text-left hover:bg-[#22303a] active:bg-[#1a232a] transition-colors touch-manipulation"
+              >
+                <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+                  <span class="text-[#699dcd] text-lg sm:text-xl flex-shrink-0">💰</span>
+                  <h3 class="text-sm sm:text-base lg:text-lg font-semibold text-white leading-tight">4. Value Flow for Investors</h3>
+                </div>
+                <svg 
+                  class="w-4 h-4 sm:w-5 sm:h-5 text-[#699dcd] transition-transform duration-200 flex-shrink-0 ml-2"
+                  [class.rotate-180]="openCollapsibles[4]"
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              
+              <div 
+                class="border-t border-[#40484f] transition-all duration-300 overflow-hidden"
+                [class.max-h-0]="!openCollapsibles[4]"
+                [class.max-h-[700px]]="openCollapsibles[4]"
+              >
+                <div class="p-3 sm:p-4 lg:p-6 space-y-3 sm:space-y-4">
+                  <p class="text-[#8daece] text-xs sm:text-sm lg:text-base leading-relaxed">
+                    The launchpad introduces a clear participation cycle:
+                  </p>
+                  
+                  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                    <div class="bg-[#22303a] rounded-lg p-3 sm:p-4 text-center">
+                      <div class="text-[#699dcd] text-xl sm:text-2xl mb-2">🔄</div>
+                      <h6 class="text-white font-medium text-sm sm:text-base mb-1">Acquire</h6>
+                      <p class="text-[#8daece] text-xs sm:text-sm">ODX utility tokens or OAT tokens via ODX DEX/Launchpad</p>
+                    </div>
+                    <div class="bg-[#22303a] rounded-lg p-3 sm:p-4 text-center">
+                      <div class="text-[#699dcd] text-xl sm:text-2xl mb-2">🎯</div>
+                      <h6 class="text-white font-medium text-sm sm:text-base mb-1">Participate</h6>
+                      <p class="text-[#8daece] text-xs sm:text-sm">Stake ODX for governance rewards, or hold OAT tokens for yields</p>
+                    </div>
+                    <div class="bg-[#22303a] rounded-lg p-3 sm:p-4 text-center">
+                      <div class="text-[#699dcd] text-xl sm:text-2xl mb-2">🗳️</div>
+                      <h6 class="text-white font-medium text-sm sm:text-base mb-1">Govern</h6>
+                      <p class="text-[#8daece] text-xs sm:text-sm">Vote on treasury use, yield distributions, and project milestones</p>
+                    </div>
+                    <div class="bg-[#22303a] rounded-lg p-3 sm:p-4 text-center">
+                      <div class="text-[#699dcd] text-xl sm:text-2xl mb-2">💎</div>
+                      <h6 class="text-white font-medium text-sm sm:text-base mb-1">Redeem</h6>
+                      <p class="text-[#8daece] text-xs sm:text-sm">Exit by burning tokens, triggering conversion into collateral or yield payouts</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 5. Strategic Impact Collapsible -->
+            <div class="bg-[#172736] border border-[#40484f] rounded-lg sm:rounded-xl overflow-hidden">
+              <button 
+                (click)="toggleCollapsible(5)"
+                class="w-full flex items-center justify-between p-3 sm:p-4 lg:p-6 text-left hover:bg-[#22303a] active:bg-[#1a232a] transition-colors touch-manipulation"
+              >
+                <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+                  <span class="text-[#699dcd] text-lg sm:text-xl flex-shrink-0">🌍</span>
+                  <h3 class="text-sm sm:text-base lg:text-lg font-semibold text-white leading-tight">5. Strategic Impact</h3>
+                </div>
+                <svg 
+                  class="w-4 h-4 sm:w-5 sm:h-5 text-[#699dcd] transition-transform duration-200 flex-shrink-0 ml-2"
+                  [class.rotate-180]="openCollapsibles[5]"
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              
+              <div 
+                class="border-t border-[#40484f] transition-all duration-300 overflow-hidden"
+                [class.max-h-0]="!openCollapsibles[5]"
+                [class.max-h-[600px]]="openCollapsibles[5]"
+              >
+                <div class="p-3 sm:p-4 lg:p-6">
+                  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                    <div class="bg-[#22303a] rounded-lg p-3 sm:p-4">
+                      <h6 class="text-[#699dcd] font-medium text-sm sm:text-base mb-2">For Startups</h6>
+                      <p class="text-[#8daece] text-xs sm:text-sm">Provides sustainable funding and operational support.</p>
+                    </div>
+                    <div class="bg-[#22303a] rounded-lg p-3 sm:p-4">
+                      <h6 class="text-[#699dcd] font-medium text-sm sm:text-base mb-2">For Real Estate</h6>
+                      <p class="text-[#8daece] text-xs sm:text-sm">Opens luxury ryads and high-value properties to global participation.</p>
+                    </div>
+                    <div class="bg-[#22303a] rounded-lg p-3 sm:p-4">
+                      <h6 class="text-[#699dcd] font-medium text-sm sm:text-base mb-2">For Investors</h6>
+                      <p class="text-[#8daece] text-xs sm:text-sm">Delivers secure, yield-generating, and transparent instruments.</p>
+                    </div>
+                    <div class="bg-[#22303a] rounded-lg p-3 sm:p-4">
+                      <h6 class="text-[#699dcd] font-medium text-sm sm:text-base mb-2">For Africa</h6>
+                      <p class="text-[#8daece] text-xs sm:text-sm">Catalyzes financial inclusion, creating a new ecosystem of regulated, tokenized, fractional asset ownership.</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
